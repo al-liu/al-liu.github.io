@@ -6,19 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="旧文章迁移自：https://www.jianshu.com/u/06062b2fb381 demo地址：https://github.com/al-liu/HCSpringBoard.git 效果图： 说明项目是个手机银行app，要求做一个仿照招商手机银行的最爱菜单功能，没有找到合适的轮子，就只能自己写个了。功能是在原有项目上做的（原来只能添加和删除），后来抽出来一个demo，因为逻辑较复杂，也">
+    <meta name="description" content="旧文章迁移自：简书 create by 2016.03.08 22:27 demo地址：GitHub 效果图： 说明项目是个手机银行app，要求做一个仿照招商手机银行的最爱菜单功能，没有找到合适的轮子，就只能自己写个了。功能是在原有项目上做的（原来只能添加和删除），后来抽出来一个demo，因为逻辑较复杂，也没有花太多时间休整代码，复用程度不够高，但是按照下面我写的分析流程来集成该功能并没有什么困难">
 <meta name="keywords" content="Java, iOS, Web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="实现 iOS 类似 SpringBoard 图标合并删除排序功能">
 <meta property="og:url" content="https://github.com/al-liu/2019/03/28/实现-iOS-类似-SpringBoard-图标合并删除排序功能/index.html">
 <meta property="og:site_name" content="刘海川的技术博客">
-<meta property="og:description" content="旧文章迁移自：https://www.jianshu.com/u/06062b2fb381 demo地址：https://github.com/al-liu/HCSpringBoard.git 效果图： 说明项目是个手机银行app，要求做一个仿照招商手机银行的最爱菜单功能，没有找到合适的轮子，就只能自己写个了。功能是在原有项目上做的（原来只能添加和删除），后来抽出来一个demo，因为逻辑较复杂，也">
+<meta property="og:description" content="旧文章迁移自：简书 create by 2016.03.08 22:27 demo地址：GitHub 效果图： 说明项目是个手机银行app，要求做一个仿照招商手机银行的最爱菜单功能，没有找到合适的轮子，就只能自己写个了。功能是在原有项目上做的（原来只能添加和删除），后来抽出来一个demo，因为逻辑较复杂，也没有花太多时间休整代码，复用程度不够高，但是按照下面我写的分析流程来集成该功能并没有什么困难">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/292794-017cef510596657e.gif?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2019-03-28T12:48:12.672Z">
+<meta property="og:updated_time" content="2019-03-28T14:34:50.815Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实现 iOS 类似 SpringBoard 图标合并删除排序功能">
-<meta name="twitter:description" content="旧文章迁移自：https://www.jianshu.com/u/06062b2fb381 demo地址：https://github.com/al-liu/HCSpringBoard.git 效果图： 说明项目是个手机银行app，要求做一个仿照招商手机银行的最爱菜单功能，没有找到合适的轮子，就只能自己写个了。功能是在原有项目上做的（原来只能添加和删除），后来抽出来一个demo，因为逻辑较复杂，也">
+<meta name="twitter:description" content="旧文章迁移自：简书 create by 2016.03.08 22:27 demo地址：GitHub 效果图： 说明项目是个手机银行app，要求做一个仿照招商手机银行的最爱菜单功能，没有找到合适的轮子，就只能自己写个了。功能是在原有项目上做的（原来只能添加和删除），后来抽出来一个demo，因为逻辑较复杂，也没有花太多时间休整代码，复用程度不够高，但是按照下面我写的分析流程来集成该功能并没有什么困难">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/292794-017cef510596657e.gif?imageMogr2/auto-orient/strip">
     
     
@@ -74,6 +74,8 @@
     <br>
     <span id="actions">
       <ul>
+        
+        <li><a class="icon" href="/2019/03/29/UITableView-教程：动态-Table-View-Cell-高/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
@@ -140,8 +142,8 @@
   
 
   <div class="content" itemprop="articleBody">
-    <p>旧文章迁移自：<a href="https://www.jianshu.com/u/06062b2fb381" target="_blank" rel="noopener">https://www.jianshu.com/u/06062b2fb381</a></p>
-<p><strong>demo地址</strong>：<a href="https://github.com/al-liu/HCSpringBoard.git">https://github.com/al-liu/HCSpringBoard.git</a></p>
+    <p>旧文章迁移自：<a href="https://www.jianshu.com/u/06062b2fb381" target="_blank" rel="noopener">简书</a> create by 2016.03.08 22:27</p>
+<p><strong>demo地址</strong>：<a href="https://github.com/al-liu/HCSpringBoard.git">GitHub</a></p>
 <p><strong>效果图</strong>：<br><img src="http://upload-images.jianshu.io/upload_images/292794-017cef510596657e.gif?imageMogr2/auto-orient/strip" alt></p>
 <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>项目是个手机银行app，要求做一个仿照招商手机银行的最爱菜单功能，没有找到合适的轮子，就只能自己写个了。功能是在原有项目上做的（原来只能添加和删除），后来抽出来一个demo，因为逻辑较复杂，也没有花太多时间休整代码，复用程度不够高，但是按照下面我写的分析流程来集成该功能并没有什么困难。<br>希望朋友们帮我指正代码问题和bug。</p>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>组织菜单数据结构在 <code>HCAssistant</code> 类中，配置一个菜单要显示的图片，菜单名称，是否默认显示，是否可删除，跳转页面等。</p>
