@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="旧翻译文章迁移自：简书 create by 2016.09.01 10:56 原文地址原作者：Richard Turton 于 2014.10.7  更新于 2015.4.17 : 使用的 Xcode 6.3 和 Swift 1.2译者说明:下面的代码示例，是我调整过的，因为用 Xcode7.3 会报错,旧代码需要适配。调整后的完整代码。 更新说明: 这篇教程被 Richard Turton 更新">
+<meta name="keywords" content="Java, iOS, Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NSOperation 和 NSOperationQueue 的 Swift 教程">
+<meta property="og:url" content="https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/index.html">
+<meta property="og:site_name" content="刘海川的技术博客">
+<meta property="og:description" content="旧翻译文章迁移自：简书 create by 2016.09.01 10:56 原文地址原作者：Richard Turton 于 2014.10.7  更新于 2015.4.17 : 使用的 Xcode 6.3 和 Swift 1.2译者说明:下面的代码示例，是我调整过的，因为用 Xcode7.3 会报错,旧代码需要适配。调整后的完整代码。 更新说明: 这篇教程被 Richard Turton 更新">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/292794-b8d0cb475f3ca7c5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/292794-0d6e2443e805b851.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/292794-ef23afab27037ee4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/292794-0a6d698f95e46769.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/292794-83616d985f89dbc3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/292794-554e93cddb344cc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/292794-8cd6bea944c46f87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/292794-12d24f48ae34267b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/292794-255ab0c56aca596d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-03-31T12:33:04.784Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NSOperation 和 NSOperationQueue 的 Swift 教程">
+<meta name="twitter:description" content="旧翻译文章迁移自：简书 create by 2016.09.01 10:56 原文地址原作者：Richard Turton 于 2014.10.7  更新于 2015.4.17 : 使用的 Xcode 6.3 和 Swift 1.2译者说明:下面的代码示例，是我调整过的，因为用 Xcode7.3 会报错,旧代码需要适配。调整后的完整代码。 更新说明: 这篇教程被 Richard Turton 更新">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/292794-b8d0cb475f3ca7c5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>NSOperation 和 NSOperationQueue 的 Swift 教程</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/03/29/UITableView-教程：动态-Table-View-Cell-高/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&text=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&title=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&is_video=false&description=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=NSOperation 和 NSOperationQueue 的 Swift 教程&body=Check out this article: https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&title=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&title=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&title=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&title=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&name=NSOperation 和 NSOperationQueue 的 Swift 教程&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备开始"><span class="toc-number">1.</span> <span class="toc-text">准备开始</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一次尝试"><span class="toc-number">1.1.</span> <span class="toc-text">第一次尝试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#任务-Task-，线程-Thread-和进程-Process"><span class="toc-number">2.</span> <span class="toc-text">任务 Task ，线程 Thread 和进程 Process</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NSOperation-vs-Grand-Central-Dispatch-GCD"><span class="toc-number">3.</span> <span class="toc-text">NSOperation vs. Grand Central Dispatch (GCD)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重新定义-App-的模型"><span class="toc-number">4.</span> <span class="toc-text">重新定义 App 的模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更好的调整"><span class="toc-number">5.</span> <span class="toc-text">更好的调整</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从这里去哪儿"><span class="toc-number">6.</span> <span class="toc-text">从这里去哪儿</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        NSOperation 和 NSOperationQueue 的 Swift 教程
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">刘海川的技术博客</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-03-31T12:29:01.000Z" itemprop="datePublished">2019-03-31</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>旧翻译文章迁移自：<a href="https://www.jianshu.com/u/06062b2fb381" target="_blank" rel="noopener">简书</a> create by 2016.09.01 10:56</p>
+<p><a href="https://www.raywenderlich.com/76341/use-nsoperation-nsoperationqueue-swift" target="_blank" rel="noopener">原文地址</a><br>原作者：<a href="https://www.raywenderlich.com/u/jrturton" target="_blank" rel="noopener">Richard Turton</a> 于 2014.10.7</p>
+<hr>
+<p>更新于 2015.4.17 : 使用的 Xcode 6.3 和 Swift 1.2<br><strong>译者说明</strong>:下面的代码示例，是我调整过的，因为用 Xcode7.3 会报错,旧代码需要适配。<a href="https://github.com/al-liu/RayWenderlich-Demos">调整后的完整代码</a>。</p>
+<p><strong>更新说明</strong>: 这篇教程被 Richard Turton 更新到了 iOS8，Xcode 6.1 和 Swift。<a href="https://www.raywenderlich.com/76341/use-nsoperation-nsoperationqueue-swift" target="_blank" rel="noopener">原文</a>是教程团队成员 <a href="https://www.raywenderlich.com/u/Canopus" target="_blank" rel="noopener">Soheil Azarpour</a>创作的。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/292794-b8d0cb475f3ca7c5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="学习怎样在你的 app 中使用 NSOperations"></p>
+<p>每个人都有过在使用 iOS 或者 Mac app 时，点击按钮或输入文本突然界面停止响应的糟糕体验。</p>
+<p>在 Mac 上，你的用户会看到一个沙漏或一个旋转的彩色轮子直到他们能再与 UI 交互。在 iOS app 上，用户期望 app 可以立马响应他们的触摸。不能响应的 app 会让人感觉不好和慢，且通常会收到坏的评价。</p>
+<p>保持你的 app 响应灵敏说的比做的要容易的多。一旦你的 app 需要执行大量任务，事情很快就会变的复杂。在主运行循环中没有太多的时间去执行繁重的工作而且它还要提供 UI 的响应。</p>
+<p>解决方法是通过 <strong>并发</strong> 把工作移出主线程。并发的意思就是你的程序在同一时间执行多个流(或线程)的操作，这样你的工作在执行中，界面还可以持续响应。</p>
+<p>有一种方法是使用 iOS 里的 <strong>NSOperation</strong> 和 <strong>NSOperationQueue</strong> 类并发执行操作。在这个教程里，你将学会怎样去使用它们！你将从一个 app 完全不使用并发开始，因此它将显示的非常慢且卡顿。然后你将重新修改这个程序加上并发操作，并希望可以为用户提供一个更灵敏的界面。</p>
+<h2 id="准备开始"><a href="#准备开始" class="headerlink" title="准备开始"></a>准备开始</h2><p>总体来说这个教程的简单项目是一个显示过滤后图片的表格。这些图片将被从网上下载下来，进行滤镜处理，然后显示到表格（table view）上。</p>
+<p>这里是这个 app 的模型图表：<br><img src="http://upload-images.jianshu.io/upload_images/292794-0d6e2443e805b851.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="初步模型"></p>
+<h3 id="第一次尝试"><a href="#第一次尝试" class="headerlink" title="第一次尝试"></a>第一次尝试</h3><p>下载<a href="http://www.raywenderlich.com/wp-content/uploads/2014/10/ClassicPhotos-Starter63.zip" target="_blank" rel="noopener">第一个版本的项目</a>，你将在这个教程上开始。<br><strong>译者提示</strong>:下载下来的项目有一些报错，但是根据 Xcode 的提示很容易就修复了。</p>
+<p><strong>注意</strong>:所有的图片来自<a href="http://www.freeimages.com" target="_blank" rel="noopener">stock.xchng</a>。数据源里有一些图片是故意找不到名字的，以便有一些下载失败的案例去练习失败的情况。</p>
+<p>编译并运行这个项目，之后你将看到一个显示一列照片的 app。试着滑动这个列表。很痛苦是不是？<br><img src="http://upload-images.jianshu.io/upload_images/292794-ef23afab27037ee4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="优秀的照片，运行起来很慢"></p>
+<p>所有的操作都在 <strong>ListViewController.swift</strong> 文件里，且大部分是在 <strong>tableView(_:cellForRowAtIndexPath:)</strong> 方法里面。</p>
+<p>看下这个方法并注意到有两件事集中到那里：<br>1，<strong>从网络加载图片的数据</strong>。即使是很简单的工作，app 也要等待下载完成才能继续。<br>2，<strong>使用 Core Image 过滤图片</strong>。这个方法使用一个深褐色来过滤图片。如果你想知道更多关于 Core Image 过滤的东西，可以查看 <a href="https://www.raywenderlich.com/76285/beginning-core-image-swift" target="_blank" rel="noopener">Beginning Core Image in Swift</a>。</p>
+<p>另外，你也要在第一次请求时从网上获取照片的列表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lazy var photos = NSDictionary(contentsOfURL:dataSourceURL)</span><br></pre></td></tr></table></figure></p>
+<p>所有的工作都在程序的主线程。因为主线程也要负责用户的交互，从网络加载东西会让它一直忙碌且过滤图片正在消磨 app 的响应速度。你可以使用 Xcode 的仪器视图可以快速看到一个概览。显示 <strong>Debug navigator</strong> (Command-6) 并且在程序运行的时候选择 <strong>CPU</strong> 看到一个仪器视图。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/292794-0a6d698f95e46769.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Xcode 的仪器视图，显示在主线程上上升的图形"></p>
+<p>你可以看到在 Thread 1 所有的长钉，Thread 1 就是 app 的主线程。更多的细节信息，你可以使用 <strong>instruments</strong> 来运行 app，但<a href="https://www.raywenderlich.com/97886/instruments-tutorial-with-swift-getting-started" target="_blank" rel="noopener">这是另一篇教程</a>。</p>
+<p>现在来思考下怎么能提升你的用户体验！</p>
+<h2 id="任务-Task-，线程-Thread-和进程-Process"><a href="#任务-Task-，线程-Thread-和进程-Process" class="headerlink" title="任务 Task ，线程 Thread 和进程 Process"></a>任务 Task ，线程 Thread 和进程 Process</h2><p>在你扑进这个教程之前，有一点技术概念需要去理解下。我定义了几项：</p>
+<ul>
+<li><strong>Task</strong>:一个简单的，单一的工作需要去完成。</li>
+<li><strong>Thread</strong>:一种操作系统提供的机制，允许在单独的程序里在同一时间按照多组指令去执行操作。</li>
+<li><strong>Process</strong>:一个可执行的大块代码，可由多个线程组成。</li>
+</ul>
+<p><strong>注意</strong>：在 iOS 和 OS X，这个线程功能被 POSIX 线程 API（或 pthreads） 提供，且是操作系统的一部分。这是一个相当底层的技术，并且你将发现它很容易出错；也许这个线程错误还极难被发现！</p>
+<p>这个 Foundation 框架包含 NSTread 类，它更容易被处理，但是管理 NSThread 的多线程还是让人头疼。 NSOperation 和 NSOperationQueue 是高层级的类，在处理多线程的过程中非常简单。</p>
+<p>在这张图表里，你能看到进程，线程和任务的关系：<br><img src="http://upload-images.jianshu.io/upload_images/292794-83616d985f89dbc3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="进程，线程和任务"><br>这样你可以看到，一个进程可以包含多个执行的线程，且每个线程可以同一时间处理多个任务。</p>
+<p>在这张图表里，thread 2 执行读取一个文件的任务，同时 thread 1 执行界面相关的代码。这是十分相似的，你怎样在 iOS 里组织你的代码－主线程应该执行界面相关的任何工作，而次要线程应该执行慢或耗时的操作，像读取文件，请求网络等。</p>
+<h2 id="NSOperation-vs-Grand-Central-Dispatch-GCD"><a href="#NSOperation-vs-Grand-Central-Dispatch-GCD" class="headerlink" title="NSOperation vs. Grand Central Dispatch (GCD)"></a>NSOperation vs. Grand Central Dispatch (GCD)</h2><p>你可能听过过<a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/index.html" target="_blank" rel="noopener">Grand Central Dispatch (GCD)</a>。概括下，GCD 是由语言的特性，运行时库，和系统的增强为在 iOS 和 OS X 的多核硬件上支持并发提供了成体系的和综合的改善。如果你想多学习一些关于 GCD 的知识，可以去读我们的 <a href="https://www.raywenderlich.com/4295/multithreading-and-grand-central-dispatch-on-ios-for-beginners-tutorial" target="_blank" rel="noopener">Multithreading and Grand Central Dispatch on iOS for Beginners Tutorial</a></p>
+<p><strong>NSOperation</strong> 和 <strong>NSOperationQueue</strong> 被构建在 GCD 的上层。作为很普遍的规则， Apple 推荐使用更高级的抽象，在经过评测显示真的需要低级别时，然后降下来。</p>
+<p>这里是对于两个技术的比较，帮助你决定什么时候在哪去使用 GCD 或 <strong>NSOperation</strong>:</p>
+<ul>
+<li><strong>GCD</strong> 是一个轻量的方法去描述工作单元被并发执行。你不能去安排这些工作单元；系统会为你去安排这些。block 之间添加依赖会很头痛。取消和暂停一个 block 需要开发者做额外的工作！:]</li>
+<li><strong>NSOperation</strong> 和 GCD 比较增加一点额外的性能消耗，但你可以在各种操作之间增加依赖且重用，取消或暂停它们。</li>
+</ul>
+<p>这个教程将使用 <strong>NSOperation</strong> 因为你需要在用户停止滑动，图片离开了屏幕后，为特定的图片取消一个操作，处理表格的性能和功率消耗。即使这些操作在后台线程，如果有太多的操作在队列里等待，也是会损耗性能的。</p>
+<h2 id="重新定义-App-的模型"><a href="#重新定义-App-的模型" class="headerlink" title="重新定义 App 的模型"></a>重新定义 App 的模型</h2><p>现在来重新定义下最开始的这个没有线程的模型！如果你仔细看下初始的模型，你可以看到有三个线程的区域可以被改善。分离这三个区域并且把它们放到分离线程中，主线程将被减轻工作，让它持续响应界面交互。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/292794-554e93cddb344cc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="改进模型"></p>
+<p>去解除你的程序的障碍，你将需要一个特定的线程去响应界面，一个线程专门下载数据源和图片，且用一个线程去过滤图片。在新的模型里，app 在主线程上开始并且加载一个空的 table view。在相同的时间，这个 app 启动第二个线程去下载数据源。</p>
+<p>一旦数据源被下载下来，你将告诉 table view 去刷新自己。凡是涉及界面的这些都要在主线程完成。在这一点上，这个 table view 知道它有多少行，它知道图片的 URL 需要去显示出来，但它还没有真实的图片！如果你立马去下载所有的图片，效率会非常的低，因此你不需要一次把所有的图片都下载下来！</p>
+<p>做什么才会更好呢？</p>
+<p>一个更好的模型是去开始下载那些在屏幕上显示出来的行的图片。所以你的代码要先询问 table view 那些行是显示的，然后去开始下载的处理。还有，图片的滤镜处理不能在图片下载完成之前进行。因此，代码应该直到有一个没有过滤的图片等待处理时，在去开始处理图片的过滤。</p>
+<p>为了让你的 app 显得更灵敏，一旦图片下载成功，代码要正确的显示它们。然后开始过滤图片，更新 UI 显示这个过滤后的图片。下面的图表就是这个处理的大体控制流程：<br><img src="http://upload-images.jianshu.io/upload_images/292794-8cd6bea944c46f87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="控制流"></p>
+<p>为了达到这些目的，你需要去追踪这个图片当前是否被下载，是否下载完成，或是否在过滤。你也需要去追踪每个操作的状态，是正在下载或正在过滤的操作，以至于你可以取消，暂停或恢复当每个用户滑动时。</p>
+<p>好的！现在你要准备开始编码了!:]</p>
+<p>打开项目，增加一个名字叫 <strong>PhotoOperations.swift</strong> 的 <strong>Swift File</strong> 到你的项目。增加下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line"></span><br><span class="line">//This enum contains all the possible states a photo record can be in</span><br><span class="line">enum PhotoRecordState &#123;</span><br><span class="line">    case New, Downloaded,Filtered,Failed</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class PhotoRecord &#123;</span><br><span class="line">    let name:String</span><br><span class="line">    let url:NSURL</span><br><span class="line">    var state = PhotoRecordState.New</span><br><span class="line">    var image = UIImage(named: &quot;Placeholder&quot;)</span><br><span class="line">    </span><br><span class="line">    init(name:String, url:NSURL) &#123;</span><br><span class="line">        self.name = name</span><br><span class="line">        self.url = url</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>: 确信 <strong>import UIKit</strong> 在文件的头部。默认，Xcode将只导入 Foundation 到 Swift 文件中。</p>
+<p>这个简单的类将代表在 app 中显示的每个照片，连同它的当前状态，新创建的记录默认是 <strong>.New</strong> 。图片默认是一个占位符。</p>
+<p>你需要一个单独的类去追踪每个操作的状态。增加下面的内容到 <strong>PhotoOperations.swift</strong> 的底部：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class PendingOperations &#123;</span><br><span class="line">    lazy var downloadsInProgress = [NSIndexPath:NSOperation]()</span><br><span class="line">    lazy var downloadQueue:NSOperationQueue = &#123;</span><br><span class="line">        var queue = NSOperationQueue()</span><br><span class="line">        queue.name = &quot;Download queue&quot;</span><br><span class="line">        queue.maxConcurrentOperationCount = 1</span><br><span class="line">        return queue</span><br><span class="line">    &#125;()</span><br><span class="line">    </span><br><span class="line">    lazy var filtrationsInProgress = [NSIndexPath:NSOperation]()</span><br><span class="line">    lazy var filtrationQueue:NSOperationQueue = &#123;</span><br><span class="line">        var queue = NSOperationQueue()</span><br><span class="line">        queue.name = &quot;Image Filtration queue&quot;</span><br><span class="line">        queue.maxConcurrentOperationCount = 1</span><br><span class="line">        return queue</span><br><span class="line">    &#125;()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个类包含两个字典去记录表格里每一行的活动，等待下载和过滤的操作，并且有每种类型操作的两个队列。</p>
+<p>所有的值都是懒加载（lazily），意思就是直到它们第一次获取才被初始化。这能提高你的 app 的性能。</p>
+<p>创建 <strong>NSOperationQueue</strong> 非常的简单，正如你看到的。命名你的队列有助于你在 debugger 或者 instruments 里看到这个名字。这个<strong>maxConcurrentOperationCount</strong> 为了这个教程设置的是 1，可以让你看到操作是一个接一个完成的。你可以离开这部分允许队列去决定一次处理多少操作－这能更进一步提高性能。</p>
+<p>队列怎样决定一次运行多少操作？这是一个好问题!:]它依赖硬件。默认，<strong>NSOperationQueue</strong> 将会在幕后做一些计算，决定代码运行在哪些特定的平台是最好的，将会启动最大可能数量的线程。</p>
+<p>考虑下面这个例子。假定系统是闲置的，并且有大量资源可用，因此队列可以像八个同时存在的线程一样启动。下一次你运行这个程序，系统可能会忙于与其他不相关的操作，这些操作都是消耗资源，而队列只启动两个同时存在的线程。因为你设置了最大并发操作数量，在这个 app 里在同一时间只能有一个操作发生。</p>
+<p><strong>注意</strong>: 你可能好奇为什么不得不追踪所有的活动和挂起的操作。这个队列有一个 <strong>operations</strong> 方法返回一个包含操作的数组，所以为什么不使用这个呢？在这个项目它不能满足需求。你需要去追踪和 table view 行数关联的操作，这就需要每次都去遍历数组。把它们都存到字典里，用下标（index path）作为键（key）可以快速查找，效率还高。</p>
+<p>现在来关心下下载和过滤操作。添加下面的代码到 <strong>PhotoOperations.swift</strong> 的底部:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">class ImageDownloader: NSOperation &#123;</span><br><span class="line">    //1</span><br><span class="line">    let photoRecord: PhotoRecord</span><br><span class="line">    //2</span><br><span class="line">    init(photoRecord:PhotoRecord) &#123;</span><br><span class="line">        self.photoRecord = photoRecord</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //3</span><br><span class="line">    override func main() &#123;</span><br><span class="line">        //4</span><br><span class="line">        if self.cancelled &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        //5</span><br><span class="line">        let imageData = NSData(contentsOfURL: self.photoRecord.url)</span><br><span class="line">        </span><br><span class="line">        //6</span><br><span class="line">        if self.cancelled &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        //7</span><br><span class="line">        if imageData?.length &gt; 0 &#123;</span><br><span class="line">            self.photoRecord.image = UIImage(data: imageData!)</span><br><span class="line">            self.photoRecord.state = .Downloaded</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            self.photoRecord.state = .Failed</span><br><span class="line">            self.photoRecord.image = UIImage(named: &quot;Failed&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>NSOperation</strong> 是一个抽象类，为子类化设计。每个子类代表一个特定的任务，如图中所描述的。</p>
+<p>这里说明下在上面的代码里每一个数字注释发生了什么：</p>
+<ol>
+<li>增加一个 <strong>PhotoRecord</strong> 对象的常量引用关联到这个操作上。</li>
+<li>创建一个指定初始化构造器，传入一个照片记录。</li>
+<li><strong>main</strong> 是 <strong>NSOperation</strong> 的子类要重写的方法，实际执行工作的地方。</li>
+<li>在开始时检查是否取消。操作应该在试图做长时间或密集工作之前定期的检查操作有没有被取消。</li>
+<li>下载图片数据。</li>
+<li>再次检查有没有被取消。</li>
+<li>如果有数据，创建一个图片对象并添加到记录里，修改记录状态。如果没有数据，标记记录为失败，设置一个适当的图片。</li>
+</ol>
+<p>接下来，你将创建另一个图片过滤的操作！增加下面的代码到 <strong>PhotoOperations.swift</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class ImageFiltration: NSOperation &#123;</span><br><span class="line">    let photoRecord: PhotoRecord</span><br><span class="line">    </span><br><span class="line">    init(photoRecord:PhotoRecord) &#123;</span><br><span class="line">        self.photoRecord = photoRecord</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    override func main() &#123;</span><br><span class="line">        if self.cancelled &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        if self.photoRecord.state != .Downloaded &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        if let filteredImage = self.applySepiaFilter(self.photoRecord.image!) &#123;</span><br><span class="line">            self.photoRecord.image = filteredImage</span><br><span class="line">            self.photoRecord.state = .Filtered</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个看起来和下载操作很像，除了给图片应用一个滤镜（使用了一个未实现的方法，因此编译器会报错）替换下载代码。</p>
+<p>增加缺失的滤镜方法到 <strong>ImageFiltration</strong> 类里：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">func applySepiaFilter(image:UIImage) -&gt; UIImage? &#123;</span><br><span class="line">        let inputImage = CIImage(data:UIImagePNGRepresentation(image)!)</span><br><span class="line">        </span><br><span class="line">        if self.cancelled &#123;</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">        let context = CIContext(options:nil)</span><br><span class="line">        let filter = CIFilter(name:&quot;CISepiaTone&quot;)</span><br><span class="line">        filter!.setValue(inputImage, forKey: kCIInputImageKey)</span><br><span class="line">        filter!.setValue(0.8, forKey: &quot;inputIntensity&quot;)</span><br><span class="line">        let outputImage = filter!.outputImage</span><br><span class="line">        </span><br><span class="line">        if self.cancelled &#123;</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        let outImage = context.createCGImage(outputImage!, fromRect: outputImage!.extent)</span><br><span class="line">        let returnImage = UIImage(CGImage: outImage)</span><br><span class="line">        return returnImage</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这个图片的滤镜使用的是之前在 <strong>ListViewController</strong> 里的相同的实现。它被移动到了这里因此它可以作为单独的操作在后台。再一次，你应该频繁的检查操作是否被取消；一个好的实践是在任何需要昂贵方法调用的前后去做检查。一旦过滤完成，你可以设置值给照片记录实例。</p>
+<p>好的！现在你有了所有的工具和基础来处理需要后台任务的操作。现在返回到视图控制器并且修改它利用这些新的好处。</p>
+<p>切换到 <strong>ListViewController.swift</strong> 并且删除 <strong>lazy var photos</strong>属性，增加下面的引用替换它：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var photos = [PhotoRecord]()</span><br><span class="line">let pendingOperations = PendingOperations()</span><br></pre></td></tr></table></figure>
+<p>这是最早创建的 <strong>PhotoDetails</strong> 对象的数组，并且 <strong>PendingOperations</strong> 对象去管理这些操作。</p>
+<p>增加一个新的方法到这个类去下载照片的属性列表（plist）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">func fetchPhotoDetails() &#123;</span><br><span class="line">        let request = NSURLRequest(URL: dataSourceURL!)</span><br><span class="line">        UIApplication.sharedApplication().networkActivityIndicatorVisible = true</span><br><span class="line">        </span><br><span class="line">        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) &#123; (response, data, error) in</span><br><span class="line">            if data != nil &#123;</span><br><span class="line">                </span><br><span class="line">                let datasourceDictionary = try? NSPropertyListSerialization.propertyListWithData(data!, options: NSPropertyListMutabilityOptions.Immutable, format: nil) as! NSDictionary</span><br><span class="line">                </span><br><span class="line">                for(key,value) in datasourceDictionary! &#123;</span><br><span class="line">                    let name = key as? String</span><br><span class="line">                    let url = NSURL(string:value as? String ?? &quot;&quot;)</span><br><span class="line">                    if name != nil &amp;&amp; url != nil &#123;</span><br><span class="line">                        let photoRecord = PhotoRecord(name:name!, url:url!)</span><br><span class="line">                        self.photos.append(photoRecord)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                self.tableView.reloadData()</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            if error != nil &#123;</span><br><span class="line">                let alert = UIAlertView(title:&quot;Oops!&quot;,message:error!.localizedDescription, delegate:nil, cancelButtonTitle:&quot;OK&quot;)</span><br><span class="line">                alert.show()</span><br><span class="line">            &#125;</span><br><span class="line">            UIApplication.sharedApplication().networkActivityIndicatorVisible = false</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法创建了一个异步的 web 请求，在完成的时候，在主队列回调 block。把在下载完属性列表的数据解析成一个 <strong>NSDictionary</strong> 并且再处理成 <strong>PhotoRecord</strong> 对象的数组。在这你还没有立马使用 <strong>NSOperation</strong>，但你用 <strong>NSOperationQueue.mainQueue()</strong> 获取到了主队列。</p>
+<p>在 <strong>viewDidLoad</strong> 的底部调用这个新的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fetchPhotoDetails()</span><br></pre></td></tr></table></figure>
+<p>接下来，找到 <strong>tableView(_:cellForRowAtIndexPath:)</strong> 并且用下面的实现替代它：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -&gt; UITableViewCell &#123;</span><br><span class="line">        let cell = tableView.dequeueReusableCellWithIdentifier(&quot;CellIdentifier&quot;, forIndexPath: indexPath)</span><br><span class="line">        //1</span><br><span class="line">        if cell.accessoryView == nil &#123;</span><br><span class="line">            let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)</span><br><span class="line">            cell.accessoryView = indicator</span><br><span class="line">        &#125;</span><br><span class="line">        let indicator = cell.accessoryView as! UIActivityIndicatorView</span><br><span class="line">        </span><br><span class="line">        //2</span><br><span class="line">        let photoDetails = photos[indexPath.row]</span><br><span class="line">        </span><br><span class="line">        //3</span><br><span class="line">        cell.textLabel?.text = photoDetails.name</span><br><span class="line">        cell.imageView?.image = photoDetails.image</span><br><span class="line">        </span><br><span class="line">        //4</span><br><span class="line">        switch (photoDetails.state)&#123;</span><br><span class="line">        case .Filtered:</span><br><span class="line">            indicator.stopAnimating()</span><br><span class="line">        case .Failed:</span><br><span class="line">            indicator.stopAnimating()</span><br><span class="line">            cell.textLabel?.text = &quot;Failed to load&quot;</span><br><span class="line">        case .New, .Downloaded:</span><br><span class="line">            indicator.startAnimating()</span><br><span class="line">            if (!tableView.dragging &amp;&amp; !tableView.decelerating) &#123;</span><br><span class="line">                startOperationsForPhotoRecord(photoDetails,indexPath:indexPath)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return cell</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>花一些时间去阅读下下面注释的解释：</p>
+<ol>
+<li>为用户提供反馈，创建一个 <strong>UIActivityIndicatorView</strong> 并且设置它做为 cell 的 accessory view。</li>
+<li>数据源包含 <strong>PhotoRecord</strong> 实例。基于当前行的 indexPath 获取正确的一个实例。</li>
+<li>这个 cell 的文本标签（label）一直是相同的，这个设置的图片是在 <strong>PhotoRecord</strong> 被处理过的，因此你可以在这一起设置它们，不论这个纪录的状态是什么。</li>
+<li>检查这个纪录。设置适当的活动指示器和文本，并且开始执行操作（还没有实现）。</li>
+</ol>
+<p>你可以删除 <strong>applySepiaFilter</strong> 的实现，因为不会被使用了。增加下面的方法到这个类开始这些操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">func startOperationsForPhotoRecord(photoDetails: PhotoRecord, indexPath: NSIndexPath) &#123;</span><br><span class="line">        switch (photoDetails.state) &#123;</span><br><span class="line">        case .New:</span><br><span class="line">            startDownloadForRecord(photoDetails, indexPath: indexPath)</span><br><span class="line">        case .Downloaded:</span><br><span class="line">            startFiltrationForRecord(photoDetails, indexPath: indexPath)</span><br><span class="line">        default:</span><br><span class="line">            NSLog(&quot;do nothing&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这里你将传入一个带它的 index path 的 <strong>PhotoRecord</strong> 实例。依赖照片记录的状态，你开始选择下载或过滤其中的一步。</p>
+<p><strong>注意</strong>:下载和过滤图片的方法是分开实现的，因为有一种情况是用户可以滚动正在下载的图片并且你还没有去过滤图片。下一次用户回到相同行时，你不需要重新下载图片；你只需要过滤图片就可以了！</p>
+<p>现在你需要去实现上面调用的这两个方法。记住，你创建了一个自定义的类，<strong>PendingOperations</strong>，去追踪操作；现在你可以实际去使用它了！增加下面的方法到这个类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">func startDownloadForRecord(photoDetails: PhotoRecord, indexPath: NSIndexPath) &#123;</span><br><span class="line">        //1</span><br><span class="line">        if pendingOperations.downloadsInProgress[indexPath] != nil &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        //2</span><br><span class="line">        let downloader = ImageDownloader(photoRecord: photoDetails)</span><br><span class="line">        //3</span><br><span class="line">        downloader.completionBlock = &#123;</span><br><span class="line">            if downloader.cancelled &#123;</span><br><span class="line">                return</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            dispatch_async(dispatch_get_main_queue(), &#123;</span><br><span class="line">                self.pendingOperations.downloadsInProgress.removeValueForKey(indexPath)</span><br><span class="line">                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        //4</span><br><span class="line">        pendingOperations.downloadsInProgress[indexPath] = downloader</span><br><span class="line">        //5</span><br><span class="line">        pendingOperations.downloadQueue.addOperation(downloader)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func startFiltrationForRecord(photoDetails: PhotoRecord, indexPath: NSIndexPath)&#123;</span><br><span class="line">        if pendingOperations.filtrationsInProgress[indexPath] != nil&#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        let filterer = ImageFiltration(photoRecord: photoDetails)</span><br><span class="line">        filterer.completionBlock = &#123;</span><br><span class="line">            if filterer.cancelled &#123;</span><br><span class="line">                return</span><br><span class="line">            &#125;</span><br><span class="line">            dispatch_async(dispatch_get_main_queue(), &#123;</span><br><span class="line">                self.pendingOperations.filtrationsInProgress.removeValueForKey(indexPath)</span><br><span class="line">                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        pendingOperations.filtrationsInProgress[indexPath] = filterer</span><br><span class="line">        pendingOperations.filtrationQueue.addOperation(filterer)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>好的！这有个列表来确认你理解了上面代码做了什么：</p>
+<ol>
+<li>首先，检查特定的 <strong>indexPath</strong> 在 <strong>downloadsInProgress</strong> 里有没有，如果有忽略它。</li>
+<li>如果没有，使用自定义构造器创建一个 <strong>ImageDownloader</strong> 实例。</li>
+<li>在操作完成时增加一个将被执行的完成回调 block。这是一个很棒的地方让你的 app 知道操作已经完成了。重点注意，这个完成回调 block 在操作取消之后也会执行，因此在做任何事之前你必须检查这个属性是否取消了，你也不能保证完成回调 block 在哪个线程上被调用，所以你需要使用 GCD 回到主线程去出发一个 table view 的刷新。</li>
+<li>增加一个操作到 <strong>downloadsInProgress</strong> 去帮助追踪任务。</li>
+<li>添加操作到下载队列。这是实际怎样得到这些操作开始运行－这个队列一但你添加操作到里面，就会为你调度。</li>
+</ol>
+<p>过滤图片的方法用的是相同的模式，除了使用 <strong>ImageFiltration</strong> 和 <strong>filtrationsInProgress</strong> 来追踪操作。作为一个练习，你可以尝试摆脱这个重复代码:]</p>
+<p>你做的！你的项目完成了。编译并运行看到了你做的改进！当你通过 table view 滚动时，你的程序不会在卡顿，开始下载图片且过滤它们让它们可见。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/292794-12d24f48ae34267b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="优秀的照片，正在滚动"></p>
+<p>是不是很酷？你看到了为你的程序更灵敏，为用户得到更多的乐趣这条很长的路上做的一点努力！</p>
+<h2 id="更好的调整"><a href="#更好的调整" class="headerlink" title="更好的调整"></a>更好的调整</h2><p>在这个教程中你走了很长的路！你的小项目反应灵敏且比原来的版本提高了很多。然而还有一些小细节要关心。你想成为一个伟大的程序员，而不是一个好的！</p>
+<p>你将发现在 table view 滚动中，这些离开屏幕的单元格还在处理下载和过滤。如果你快速的滚动，单元格会很快的从列表中返回，即使它们不可见，程序会忙于下载和过滤图片。理想情况下，程序应该取消掉过滤不在屏幕上的单元格并且优先哪些正在显示的。</p>
+<p>在你的代码里放置了取消吗？是的，你做了－现在你应该去使用它们！:]</p>
+<p>回到 Xcode ，并且打开 <strong>ListViewController.swift</strong>。去实现 <strong>tableView(_:cellForRowAtIndexPath:)</strong>，在一个 if 条件里调用 <strong>startOperationsForPhotoRecord</strong> 。<br>像下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (!tableView.dragging &amp;&amp; !tableView.decelerating) &#123;</span><br><span class="line">    startOperationsForPhotoRecord(photoDetails,indexPath:indexPath)</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>你告诉 table view 只有在 table view 不滚动的时候才开始操作。<strong>UIScrollView</strong> 有实际的属性，而且因为 <strong>UITableView</strong> 是 <strong>UIScrollView</strong> 的子类，你自动继承了这些属性。</p>
+<p>接下来，在这个类里增加实现 <strong>UIScrollView</strong> 的代理方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">override func scrollViewWillBeginDragging(scrollView: UIScrollView) &#123;</span><br><span class="line">    //1</span><br><span class="line">    suspendAllOperations()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) &#123;</span><br><span class="line">    // 2</span><br><span class="line">    if !decelerate &#123;</span><br><span class="line">        loadImagesForOnscreenCells()</span><br><span class="line">        resumeAllOperations()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">override func scrollViewDidEndDecelerating(scrollView: UIScrollView) &#123;</span><br><span class="line">    // 3</span><br><span class="line">    loadImagesForOnscreenCells()</span><br><span class="line">    resumeAllOperations()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>快速的看下关于上面代码的解释：</p>
+<ol>
+<li>用户一开始滑动，你就将暂停所有的操作并且看看用户想看到什么。你将等一会儿实现 <strong>suspendAllOperations</strong> 。</li>
+<li>如果 decelerate 这个值是 <strong>false</strong> ，意思就是用户停止了拖动这个 table view。为此你想恢复暂停的操作，取消掉没有显示的 cell 的操作，并且开始当前显示的 cell 的操作。你将实现 <strong>loadImagesForOnscreenCells</strong> 和 <strong>resumeAllOperations</strong> 。</li>
+<li>这个代理方法告诉你 table view 停止了滑动，因此你将做和第二步一样的事。</li>
+</ol>
+<p>现在，在 <strong>ListViewController.swift</strong> 里增加缺失的这些方法的实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">func suspendAllOperations () &#123;</span><br><span class="line">        pendingOperations.downloadQueue.suspended = true</span><br><span class="line">        pendingOperations.filtrationQueue.suspended = true</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func resumeAllOperations () &#123;</span><br><span class="line">        pendingOperations.downloadQueue.suspended = false</span><br><span class="line">        pendingOperations.filtrationQueue.suspended = false</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func loadImagesForOnscreenCells () &#123;</span><br><span class="line">        //1</span><br><span class="line">        if let pathsArray = tableView.indexPathsForVisibleRows &#123;</span><br><span class="line">            //2</span><br><span class="line">            var allPendingOperations = Set(pendingOperations.downloadsInProgress.keys)</span><br><span class="line">            allPendingOperations.unionInPlace(pendingOperations.filtrationsInProgress.keys)</span><br><span class="line">            </span><br><span class="line">            //3</span><br><span class="line">            var toBeCancelled = allPendingOperations</span><br><span class="line">            let visiblePaths = Set(pathsArray )</span><br><span class="line">            toBeCancelled.subtractInPlace(visiblePaths)</span><br><span class="line">            </span><br><span class="line">            //4</span><br><span class="line">            var toBeStarted = visiblePaths</span><br><span class="line">            toBeStarted.subtractInPlace(allPendingOperations)</span><br><span class="line">            </span><br><span class="line">            // 5</span><br><span class="line">            for indexPath in toBeCancelled &#123;</span><br><span class="line">                if let pendingDownload = pendingOperations.downloadsInProgress[indexPath] &#123;</span><br><span class="line">                    pendingDownload.cancel()</span><br><span class="line">                &#125;</span><br><span class="line">                pendingOperations.downloadsInProgress.removeValueForKey(indexPath)</span><br><span class="line">                if let pendingFiltration = pendingOperations.filtrationsInProgress[indexPath] &#123;</span><br><span class="line">                    pendingFiltration.cancel()</span><br><span class="line">                &#125;</span><br><span class="line">                pendingOperations.filtrationsInProgress.removeValueForKey(indexPath)</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            // 6</span><br><span class="line">            for indexPath in toBeStarted &#123;</span><br><span class="line">                let indexPath = indexPath as NSIndexPath</span><br><span class="line">                let recordToProcess = self.photos[indexPath.row]</span><br><span class="line">                startOperationsForPhotoRecord(recordToProcess, indexPath: indexPath)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>suspendAllOperations</strong> 和 <strong>resumeAllOperations</strong> 有一个简单的实现。<strong>NSOperationQueues</strong> 可以被暂停，设置 <strong>suspended</strong> 属性为 <strong>true</strong>。这将暂停这个队列的所有的操作－你不能暂停各自的操作。</p>
+<p><strong>loadImagesForOnscreenCells</strong> 有一点复杂。这是发生什么：</p>
+<ol>
+<li>从一个包含了在 table view 里所有正在显示的行的 index paths 的数组开始。</li>
+<li>所有的下载任务加上所有的过滤任务构成一个包含所有待定操作的集合。</li>
+<li>构造一组所有要被取消操作的下标索引 index paths。从所有的操作开始，然后删除那些显示行的下标索引 index paths。这就只留下包含所有不在屏幕上显示的行的一组操作。</li>
+<li>构造一组需要它们的操作开始的下标索引 index paths。以所有正在显示的行的下标索引开始，然后删除掉已经在待定操作里的一些操作。</li>
+<li>循环这些要被取消的操作，取消它们，并且从 <strong>PendingOperations</strong> 中删除它们的引用。</li>
+<li>循环这些要开始的操作，逐一调用 <strong>startOperationsForPhotoRecord</strong> 。</li>
+</ol>
+<p>构建并运行，你应该有了一个更反应灵敏且能更好管理资源的程序！给自己一轮掌声！<br><img src="http://upload-images.jianshu.io/upload_images/292794-255ab0c56aca596d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="优秀的照片，一个一个加载"></p>
+<p>注意你在完成滚动的时候，在显示的行的图片将立刻开始处理。</p>
+<h2 id="从这里去哪儿"><a href="#从这里去哪儿" class="headerlink" title="从这里去哪儿"></a>从这里去哪儿</h2><p><a href="http://www.raywenderlich.com/wp-content/uploads/2014/10/ClassicPhotos-Final63.zip" target="_blank" rel="noopener">这是完整版本的项目</a><br><strong>译者说明</strong>: 原文的完整版会有报错，我修复好了，上传到了 Github 上，而且里面有对添加依赖的实现。<br><a href="https://github.com/al-liu/RayWenderlich-Demos">修复后的完整版本项目</a></p>
+<p>如果你完成了这个项目并且花了时间去真正的理解它，恭喜！你可以考虑自己是一个更有价值的 iOS 开发者和刚开始教程时比！</p>
+<p>但是要当心－像深层次的嵌套 block，不必要的在项目中使用多线程会让不得不维护你代码的人感到难懂。线程可以引入微妙的 bug，可能永远都不会出现，直到你的网络很慢或代码运行在一个快（或慢）的设备上或一个多核的设备上。非常小心测试（或你自己观察）去验证引入的线程真的是一个改进。</p>
+<p>有一个有用的操作不能被忽略就是依赖。你能使一个操作依赖其它一个或多个操作。这个操作直到所有的依赖操作都完成了才开始。例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// MyDownloadOperation is a subclass of NSOperation</span><br><span class="line">let downloadOperation = MyDownloadOperation()</span><br><span class="line">// MyFilterOperation  is a subclass of NSOperation</span><br><span class="line">let filterOperation = MyFilterOperation()</span><br><span class="line"> </span><br><span class="line">filterOperation.addDependency(downloadOperation)</span><br></pre></td></tr></table></figure>
+<p>删除依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filterOperation.removeDependency(downloadOperation)</span><br></pre></td></tr></table></figure>
+<p>这个项目的代码可以使用依赖来简化或提高吗？用你的新技能去尝试一下:]有个重要的事要注意，如果这个操作它的依赖被取消了，那么这个操作还是会开始，除非它们自然的完成了。你将需要记住这点。</p>
+<p>如果你有一些评论和问题关于这个教程或是 NSOperations，请加入到下面的论坛的讨论里。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备开始"><span class="toc-number">1.</span> <span class="toc-text">准备开始</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一次尝试"><span class="toc-number">1.1.</span> <span class="toc-text">第一次尝试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#任务-Task-，线程-Thread-和进程-Process"><span class="toc-number">2.</span> <span class="toc-text">任务 Task ，线程 Thread 和进程 Process</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NSOperation-vs-Grand-Central-Dispatch-GCD"><span class="toc-number">3.</span> <span class="toc-text">NSOperation vs. Grand Central Dispatch (GCD)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重新定义-App-的模型"><span class="toc-number">4.</span> <span class="toc-text">重新定义 App 的模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更好的调整"><span class="toc-number">5.</span> <span class="toc-text">更好的调整</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从这里去哪儿"><span class="toc-number">6.</span> <span class="toc-text">从这里去哪儿</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&text=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&title=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&is_video=false&description=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=NSOperation 和 NSOperationQueue 的 Swift 教程&body=Check out this article: https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&title=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&title=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&title=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&title=NSOperation 和 NSOperationQueue 的 Swift 教程"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2019/03/31/NSOperation-和-NSOperationQueue-的-Swift-教程/&name=NSOperation 和 NSOperationQueue 的 Swift 教程&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 刘海川 al-liu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
