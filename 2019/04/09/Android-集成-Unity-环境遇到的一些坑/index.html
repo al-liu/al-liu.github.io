@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="旧文章迁移自：简书 create by 2018.03.17 09:15 问题描述项目中最近在做一个 AR 扫行标（银行 Logo）抽奖的活动，动画模型依托 Unity 环境来展现的。Android 集成 Unity 很简单（比 iOS 方便太多），但是在使用过程中还是遇到一点小麻烦。 需求中要求扫描页面可以反复进出，在 @Override protected void onDestroy ()">
+<meta name="keywords" content="Java, iOS, Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 集成 Unity 环境遇到的一些坑">
+<meta property="og:url" content="https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/index.html">
+<meta property="og:site_name" content="刘海川的技术博客">
+<meta property="og:description" content="旧文章迁移自：简书 create by 2018.03.17 09:15 问题描述项目中最近在做一个 AR 扫行标（银行 Logo）抽奖的活动，动画模型依托 Unity 环境来展现的。Android 集成 Unity 很简单（比 iOS 方便太多），但是在使用过程中还是遇到一点小麻烦。 需求中要求扫描页面可以反复进出，在 @Override protected void onDestroy ()">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-08T23:23:56.547Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 集成 Unity 环境遇到的一些坑">
+<meta name="twitter:description" content="旧文章迁移自：简书 create by 2018.03.17 09:15 问题描述项目中最近在做一个 AR 扫行标（银行 Logo）抽奖的活动，动画模型依托 Unity 环境来展现的。Android 集成 Unity 很简单（比 iOS 方便太多），但是在使用过程中还是遇到一点小麻烦。 需求中要求扫描页面可以反复进出，在 @Override protected void onDestroy ()">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Android 集成 Unity 环境遇到的一些坑</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/04/04/阅读源代码：SDWebImage-3-8-2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&text=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&title=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&is_video=false&description=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android 集成 Unity 环境遇到的一些坑&body=Check out this article: https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&title=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&title=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&title=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&title=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&name=Android 集成 Unity 环境遇到的一些坑&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题描述"><span class="toc-number">1.</span> <span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法"><span class="toc-number">2.</span> <span class="toc-text">解决方法</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Android 集成 Unity 环境遇到的一些坑
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">刘海川的技术博客</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-08T23:21:34.000Z" itemprop="datePublished">2019-04-09</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>旧文章迁移自：<a href="https://www.jianshu.com/u/06062b2fb381" target="_blank" rel="noopener">简书</a> create by 2018.03.17 09:15</p>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>项目中最近在做一个 AR 扫行标（银行 Logo）抽奖的活动，动画模型依托 Unity 环境来展现的。Android 集成 Unity 很简单（比 iOS 方便太多），但是在使用过程中还是遇到一点小麻烦。</p>
+<p>需求中要求扫描页面可以反复进出，在 <code>@Override protected void onDestroy ()</code> 生命周期的回调方法中需要调用 <code>mUnityPlayer.quit();</code> 来达到退出 Unity 的目的。但是发现 <code>mUnityPlayer.quit();</code> 方法会杀死当前进程，不调用 <code>mUnityPlayer.quit();</code> 方法，控制台中又会提示一个服务没有被清理，会发生内存泄漏，网上的做法是集成 <code>UnityPlayer</code> 写一个新类，重写掉 <code>kill()</code> 方法，不杀死进程，但是实验了之后发现没有效果，依然会有内存泄漏的提示，虽然大部分机型可以正常使用，但是测试中小米和其他品牌的部分机型在反复进出几次 Unity 程序后，会闪退。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>最后的解决办法是，在另一个进程中启动 <code>UnityPlayerActivity</code> ，<code>mUnityPlayer.quit();</code> 方法杀死当前子进程，而不影响主进程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity</span><br><span class="line">    android:name=&quot;cn.com.global_vision_ar.UnityPlayerActivity&quot;</span><br><span class="line">    android:screenOrientation=&quot;portrait&quot;</span><br><span class="line">    android:process=&quot;:unityAR&quot;</span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure>
+<p>这个办法解决了闪退问题，但是还没有结束，<code>UnityPlayerActivity</code> 中需要接收 AR 程序的回调方法，如：<code>public void getGift()</code> ，在这个方法中请求后台接口，发起抽奖。Unity 程序改成用新进程启动后，发起抽奖接口时，发生了会话丢失的情况（抽奖是需要登录的，后台会话是基于 Cookie 中的 JessionId）。我猜是因为不在同一个进程，Cookie 没有同步，导致送到后台的 JessionId 不一致（不是登录成功后返回的 JessionId）。</p>
+<p>解决办法是使用 <code>Broadcast</code> 跨进程通信，把抽奖的请求写在主进程，要抽奖时发起广播进行抽奖，抽奖结束后得到抽奖结果的数据，再通过广播的方式把数据传回 <code>UnityPlayerActivity</code>，使用 <code>UnityPlayer.UnitySendMessage</code> 方法通知 Unity 程序。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题描述"><span class="toc-number">1.</span> <span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法"><span class="toc-number">2.</span> <span class="toc-text">解决方法</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&text=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&title=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&is_video=false&description=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android 集成 Unity 环境遇到的一些坑&body=Check out this article: https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&title=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&title=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&title=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&title=Android 集成 Unity 环境遇到的一些坑"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2019/04/09/Android-集成-Unity-环境遇到的一些坑/&name=Android 集成 Unity 环境遇到的一些坑&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 刘海川 al-liu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
