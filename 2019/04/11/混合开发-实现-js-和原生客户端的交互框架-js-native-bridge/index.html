@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="旧文章迁移自：简书 create by 2019.02.18 11:27 Github 项目地址说明：  iOS 端支持最低 iOS7 以上的设备，但是 demo 中的 js 因为使用 es6 语法，所以 iOS10 以下会出现语法错误，请使用 Babel 库来做兼容。Android 端支持最低 sdk19 4.4 以上设备，测试过 Android 7.0 的设备没问题，如果出现低版本不兼容 es">
+<meta name="keywords" content="Java, iOS, Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge">
+<meta property="og:url" content="https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/index.html">
+<meta property="og:site_name" content="刘海川的技术博客">
+<meta property="og:description" content="旧文章迁移自：简书 create by 2019.02.18 11:27 Github 项目地址说明：  iOS 端支持最低 iOS7 以上的设备，但是 demo 中的 js 因为使用 es6 语法，所以 iOS10 以下会出现语法错误，请使用 Babel 库来做兼容。Android 端支持最低 sdk19 4.4 以上设备，测试过 Android 7.0 的设备没问题，如果出现低版本不兼容 es">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/292794-c2f948da62469072.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2019-04-11T15:46:32.629Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge">
+<meta name="twitter:description" content="旧文章迁移自：简书 create by 2019.02.18 11:27 Github 项目地址说明：  iOS 端支持最低 iOS7 以上的设备，但是 demo 中的 js 因为使用 es6 语法，所以 iOS10 以下会出现语法错误，请使用 Babel 库来做兼容。Android 端支持最低 sdk19 4.4 以上设备，测试过 Android 7.0 的设备没问题，如果出现低版本不兼容 es">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/292794-c2f948da62469072.gif?imageMogr2/auto-orient/strip">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/04/09/Android-集成-Unity-环境遇到的一些坑/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&text=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&title=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&is_video=false&description=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge&body=Check out this article: https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&title=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&title=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&title=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&title=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&name=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础用法"><span class="toc-number">1.</span> <span class="toc-text">基础用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#native-调用-js"><span class="toc-number">2.</span> <span class="toc-text">native 调用 js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-插件"><span class="toc-number">3.</span> <span class="toc-text">vue 插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后"><span class="toc-number">4.</span> <span class="toc-text">最后</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">刘海川的技术博客</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-11T15:45:35.000Z" itemprop="datePublished">2019-04-11</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>旧文章迁移自：<a href="https://www.jianshu.com/u/06062b2fb381" target="_blank" rel="noopener">简书</a> create by 2019.02.18 11:27</p>
+<p><a href="https://github.com/al-liu/js-native-bridge">Github 项目地址</a><br>说明：</p>
+<blockquote>
+<p>iOS 端支持最低 iOS7 以上的设备，但是 demo 中的 js 因为使用 es6 语法，所以 iOS10 以下会出现语法错误，请使用 Babel 库来做兼容。<br>Android 端支持最低 sdk19 4.4 以上设备，测试过 Android 7.0 的设备没问题，如果出现低版本不兼容 es6 问题，同样使用 Babel 库来做下兼容。</p>
+</blockquote>
+<p>运行 demo：<br>Mac 电脑自带 web 服务器，将 js 项目拖入 <code>/Library/WebServer/Documents</code> 目录下，使用终端敲击如下命令 <code>sudo apachectl start</code> 便起来一个 web<br>服务，浏览器输入 <code>http://127.0.0.1</code> 便能访问 webServer 的 Documents 目录，iOS，Android Demo 的 WebView 访问 js demo 下 index.html 文件，iOS，Android demo 分别使用 Xcode 和 Android Studio 运行。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/292794-c2f948da62469072.gif?imageMogr2/auto-orient/strip" alt="demo.gif, Android demo 效果相近"></p>
+<h2 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h2><p>iOS，Android 客户端的混合开发，避免不了 js 和 native 之间的交互，一些常用的 js-bridge 库实现都是只支持一种系统。<br>js 调用 native 端的接口要简单，且一个函数就能调用 iOS 和 Android 两个系统，并且尽量模块化，在存在大量 native 接口的情况下便于维护这些函数。</p>
+<p>使用方法，以 js 端调用系统的相机或相册获取一张图片为例，其它功能大同小异。<br>js 端的调用代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.html  </span></span><br><span class="line">&lt;script type=<span class="string">"module"</span>&gt;</span><br><span class="line">  <span class="comment">// 导入对应的 native 功能模块，其中核心模块 native-core.js 必须导入</span></span><br><span class="line">  <span class="keyword">import</span> NCore <span class="keyword">from</span> <span class="string">'./native-bridge/native-core.js'</span></span><br><span class="line">  <span class="keyword">import</span> NKit <span class="keyword">from</span> <span class="string">'./native-bridge/native-kit.js'</span></span><br><span class="line">  <span class="keyword">var</span> nCore = NCore()</span><br><span class="line">  <span class="keyword">var</span> nKit = NKit(nCore)</span><br><span class="line">  ...</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span></span><br><span class="line">    nKit.selectPhoto(<span class="function"><span class="keyword">function</span> (<span class="params">photo</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 图片为 base64 数据</span></span><br><span class="line">      self.imageBytes = photo.image</span><br><span class="line">      <span class="keyword">return</span> <span class="string">'获取图片成功'</span></span><br><span class="line">    &#125;)</span><br><span class="line">  ...</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>selectPhoto</code> 方法的定义如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// native-kit.js</span></span><br><span class="line"><span class="comment">// 导入 native-core 核心模块</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> core =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    selectPhoto (picker) &#123;</span><br><span class="line">      <span class="comment">// 全局记录回调函数</span></span><br><span class="line">      <span class="keyword">this</span>.selectPhoto.picker = picker</span><br><span class="line">      core.loadWidget(<span class="string">'kit'</span>, <span class="keyword">this</span>)</span><br><span class="line">      <span class="comment">// NativeKit 是 native 端注册的全局对象，camera 是对应的方法名，如此就能调用到原生客户端的方法</span></span><br><span class="line">      core.evaluateNative(<span class="string">'NativeKit'</span>, <span class="string">'camera'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">photo</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 调用之前的回调函数</span></span><br><span class="line">        <span class="keyword">return</span> $nativeBridgeWidget.kit.selectPhoto.picker(photo)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>native 系统相关的接口可以定义到 native-kit.js 中，或者模块分的粒度更细。</p>
+<p>iOS 端使用 JavaScriptCore 实现交互，如何获取 JSContext 等不赘述，参考 iOS demo 即可。<br>先定义 <code>JSExport</code> 协议：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// HCKitJSExport.h</span><br><span class="line">@protocol HCKitJSExport &lt;JSExport&gt;</span><br><span class="line">// camera 即为 js 端调用的方法别名</span><br><span class="line">JSExportAs(camera,</span><br><span class="line">           - (void)cameraWithResult:(JSValue *)result</span><br><span class="line">           );</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>实现该协议：</p>
+<p>头文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// HCKitJSExportImpl.h</span><br><span class="line">@interface HCKitJSExportImpl : NSObject &lt;HCKitJSExport&gt;</span><br><span class="line">+ (instancetype)instance:(HCJSCoreBaseViewController *)vcContext;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>实现文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">@interface HCKitJSExportImpl ()&lt;UIImagePickerControllerDelegate, UINavigationControllerDelegate&gt;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, weak) HCJSCoreBaseViewController *vcContext;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) JSValue *imageValue;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line">@implementation HCKitJSExportImpl</span><br><span class="line"></span><br><span class="line">+ (instancetype)instance:(HCJSCoreBaseViewController *)vcContext &#123;</span><br><span class="line">    HCKitJSExportImpl *impl = [HCKitJSExportImpl new];</span><br><span class="line">    impl.vcContext = vcContext;</span><br><span class="line">    return impl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)cameraWithResult:(JSValue *)result &#123;</span><br><span class="line">    // 保障 oc 调 js 的回调函数和 js 在同一线程</span><br><span class="line">    self.vcContext.jsThread = [NSThread currentThread];</span><br><span class="line">    // result 该 JSValue 即为 js 的回调函数</span><br><span class="line">    _imageValue = result;</span><br><span class="line">    // ui 在主线程</span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        UIImagePickerController * imagePicker = [[UIImagePickerController alloc] init];</span><br><span class="line">        imagePicker.editing = YES;</span><br><span class="line">        imagePicker.delegate = self;</span><br><span class="line">        imagePicker.allowsEditing = YES;</span><br><span class="line">        </span><br><span class="line">        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@&quot;请选择打开方式&quot; message:nil preferredStyle:UIAlertControllerStyleActionSheet];</span><br><span class="line">        </span><br><span class="line">        UIAlertAction * camera = [UIAlertAction actionWithTitle:@&quot;相机&quot; style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) &#123;</span><br><span class="line">            imagePicker.sourceType =  UIImagePickerControllerSourceTypeCamera;</span><br><span class="line">            imagePicker.modalPresentationStyle = UIModalPresentationFullScreen;</span><br><span class="line">            imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;</span><br><span class="line">            [self.vcContext presentViewController:imagePicker animated:YES completion:nil];</span><br><span class="line">        &#125;];</span><br><span class="line">        </span><br><span class="line">        UIAlertAction * photo = [UIAlertAction actionWithTitle:@&quot;相册&quot; style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) &#123;</span><br><span class="line">            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;</span><br><span class="line">            [self.vcContext presentViewController:imagePicker animated:YES completion:nil];</span><br><span class="line">        &#125;];</span><br><span class="line">        </span><br><span class="line">        UIAlertAction * cancel = [UIAlertAction actionWithTitle:@&quot;取消&quot; style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) &#123;</span><br><span class="line">            [self.vcContext dismissViewControllerAnimated:YES completion:nil];</span><br><span class="line">        &#125;];</span><br><span class="line">        </span><br><span class="line">        [alert addAction:camera];</span><br><span class="line">        [alert addAction:photo];</span><br><span class="line">        [alert addAction:cancel];</span><br><span class="line">        </span><br><span class="line">        [self.vcContext presentViewController:alert animated:YES completion:nil];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - imagePickerController delegate</span><br><span class="line"></span><br><span class="line">- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary&lt;NSString *,id&gt; *)info &#123;</span><br><span class="line">    </span><br><span class="line">    [picker dismissViewControllerAnimated:YES completion:nil];</span><br><span class="line">    UIImage * image = [info valueForKey:UIImagePickerControllerEditedImage];</span><br><span class="line">    NSData *imageData = UIImagePNGRepresentation(image);</span><br><span class="line">    NSString *imageBase64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];</span><br><span class="line">    NSDictionary *dict = @&#123;@&quot;image&quot;: imageBase64&#125;;</span><br><span class="line">    if (self.imageValue) &#123;</span><br><span class="line">        [self.vcContext executeJSValueThreadSafe:self.imageValue args:@[dict]];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>Android 端使用的是 JavaScriptInterface 实现的交互。<br>实现类如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NativeKitJSImpl</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"NativeKitJSImpl"</span>;</span><br><span class="line">    <span class="keyword">private</span> MainActivity mActivity;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NativeKitJSImpl</span><span class="params">(MainActivity activity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mActivity = activity;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JavascriptInterface</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">camera</span><span class="params">(<span class="keyword">final</span> String picker)</span> </span>&#123;</span><br><span class="line">        mActivity.tempCallback = picker;</span><br><span class="line">        <span class="keyword">new</span> AlertDialog.Builder(mActivity)</span><br><span class="line">                .setTitle(<span class="string">"提示"</span>)</span><br><span class="line">                .setMessage(<span class="string">"选择相机或者相册"</span>)</span><br><span class="line">                .setPositiveButton(<span class="string">"相机"</span>, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialogInterface, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">                        mActivity.takePhoto(<span class="keyword">new</span> ObtainPhoto() &#123;</span><br><span class="line">                            <span class="meta">@Override</span></span><br><span class="line">                            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getPhotoBase64</span><span class="params">(String image)</span> </span>&#123;</span><br><span class="line">                                <span class="keyword">final</span> JSONObject jsonObject = <span class="keyword">new</span> JSONObject();</span><br><span class="line">                                <span class="keyword">try</span> &#123;</span><br><span class="line">                                    jsonObject.put(<span class="string">"image"</span>, image);</span><br><span class="line">                                    JsInterfaceUtils.evaluateJs(mActivity.mMainWebView, picker, <span class="keyword">new</span> ValueCallback&lt;String&gt;() &#123;</span><br><span class="line">                                        <span class="meta">@Override</span></span><br><span class="line">                                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceiveValue</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">                                            Log.d(TAG, s);</span><br><span class="line">                                        &#125;</span><br><span class="line">                                    &#125;, jsonObject);</span><br><span class="line">                                &#125; <span class="keyword">catch</span> (JSONException e) &#123;</span><br><span class="line">                                    e.printStackTrace();</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;)</span><br><span class="line">                .setNegativeButton(<span class="string">"相册"</span>, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialogInterface, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">                        mActivity.selectPhoto(<span class="keyword">new</span> ObtainPhoto() &#123;</span><br><span class="line">                            <span class="meta">@Override</span></span><br><span class="line">                            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getPhotoBase64</span><span class="params">(String image)</span> </span>&#123;</span><br><span class="line">                                <span class="keyword">final</span> JSONObject jsonObject = <span class="keyword">new</span> JSONObject();</span><br><span class="line">                                <span class="keyword">try</span> &#123;</span><br><span class="line">                                    jsonObject.put(<span class="string">"image"</span>, image);</span><br><span class="line">                                    JsInterfaceUtils.evaluateJs(mActivity.mMainWebView, picker, <span class="keyword">new</span> ValueCallback&lt;String&gt;() &#123;</span><br><span class="line">                                        <span class="meta">@Override</span></span><br><span class="line">                                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceiveValue</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">                                            Log.d(TAG, s);</span><br><span class="line">                                        &#125;</span><br><span class="line">                                    &#125;, jsonObject);</span><br><span class="line">                                &#125; <span class="keyword">catch</span> (JSONException e) &#123;</span><br><span class="line">                                    e.printStackTrace();</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 MainActivity 中添加此 JavaScriptInterface ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mMainWebView.addJavascriptInterface(<span class="keyword">new</span> NativeKitJSImpl(<span class="keyword">this</span>), <span class="string">"NativeKit"</span>);</span><br></pre></td></tr></table></figure>
+<p>如此就实现 js 与 native 端（iOS，Android）的交互。</p>
+<p><code>NativeKitJSImpl</code> 类中，可以不引用具体的 Activity，如，MainActivity 。这样耦合比较紧，可以引用接口，接口中定义要调用的方法，这样只要我的 Activity 实现了接口方法，就可以传入 jsImpl 类中了。<br>如这样定义接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义基础接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">NativeBaseInterface</span> </span>&#123;</span><br><span class="line">    <span class="function">WebView <span class="title">getMainWebView</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 提供 Activity 上下文</span></span><br><span class="line">    <span class="function">AppCompatActivity <span class="title">getActivityContext</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">NativeSelectPhotoInterface</span> <span class="keyword">extends</span> <span class="title">NativeBaseInterface</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 拍照获取图片</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">takePhoto</span><span class="params">(ObtainPhoto obtainPhoto)</span></span>;</span><br><span class="line">    <span class="comment">// 相册获取图片</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selectPhoto</span><span class="params">(ObtainPhoto obtainPhoto)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>NativeKitJSImpl</code> 类中引入上下文环境，使用 <code>WeakReference</code> 避免循环引用。<br>如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> NativeSelectPhotoInterface mActivity;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">BotsNativeKitJSImpl</span><span class="params">(WeakReference&lt;NativeSelectPhotoInterface&gt; weakReference)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.mActivity = weakReference.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="native-调用-js"><a href="#native-调用-js" class="headerlink" title="native 调用 js"></a>native 调用 js</h2><p>原生调用的 js 方法，需要 js 端将被调用的函数注册进来。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="function"><span class="keyword">function</span> (<span class="params">param</span>) </span>&#123;</span><br><span class="line">  self.$nativeUi.alert(<span class="string">'test js'</span>, <span class="built_in">JSON</span>.stringify(param), <span class="function"><span class="keyword">function</span> <span class="title">affirm</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'点击了确认ok'</span>)</span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span> <span class="title">cancel</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'点击了取消cancel'</span>)              </span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'finished'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 调用 core 核心模块的 registerJs 函数，test 是要被原生调用的函数</span></span><br><span class="line"><span class="keyword">this</span>.$nativeCore.registerJs(<span class="string">'testJs'</span>, test)</span><br></pre></td></tr></table></figure>
+<p>iOS 端调用 js 函数的示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (IBAction)testJs:(id)sender &#123;</span><br><span class="line">    NSDictionary *dict = @&#123;@&quot;foo&quot;:@&quot;hello&quot;, @&quot;bar&quot;:@YES&#125;;</span><br><span class="line">    JSValue *value = [self callJsBridge:@&quot;testJs&quot; args:@[dict]];</span><br><span class="line">    NSLog(@&quot;测试返回值：%@&quot;, [value toString]);</span><br><span class="line">&#125;</span><br><span class="line">- (JSValue *)callJsBridge:(NSString *)methodName args:(NSArray *)args &#123;</span><br><span class="line">    JSValue * jsBridge = self.appJSContext[@&quot;$jsBridge&quot;];</span><br><span class="line">    JSValue *jsFunction = [jsBridge valueForProperty:methodName];</span><br><span class="line">    return [jsFunction callWithArguments:args];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Android 端调用 js函数的示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">JSONObject jsonObject = <span class="keyword">new</span> JSONObject();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    jsonObject.put(<span class="string">"bar"</span>, <span class="string">"hello"</span>);</span><br><span class="line">    jsonObject.put(<span class="string">"foo"</span>, <span class="keyword">true</span>);</span><br><span class="line">    String script = <span class="string">"$jsBridge.testJs"</span>;</span><br><span class="line">    JsInterfaceUtils.evaluateJs(mMainWebView, script, <span class="keyword">new</span> ValueCallback&lt;String&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceiveValue</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">            Log.d(TAG, s);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, jsonObject);</span><br><span class="line">&#125; <span class="keyword">catch</span> (JSONException exception) &#123;</span><br><span class="line">    exception.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="vue-插件"><a href="#vue-插件" class="headerlink" title="vue 插件"></a>vue 插件</h2><p>实现 Vue 插件，在 Vue 框架中使用更加方便。<br>插件实现如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// native-vue.js</span></span><br><span class="line"><span class="keyword">import</span> NCore <span class="keyword">from</span> <span class="string">'./native-bridge/native-core.js'</span></span><br><span class="line"><span class="keyword">import</span> NUI <span class="keyword">from</span> <span class="string">'./native-bridge/native-ui.js'</span></span><br><span class="line"><span class="keyword">import</span> NStore <span class="keyword">from</span> <span class="string">'./native-bridge/native-store.js'</span></span><br><span class="line"><span class="keyword">import</span> NKit <span class="keyword">from</span> <span class="string">'./native-bridge/native-kit.js'</span></span><br><span class="line"><span class="keyword">import</span> NRequest <span class="keyword">from</span> <span class="string">'./native-bridge/native-request.js'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> jsBridge = &#123;&#125;</span><br><span class="line">jsBridge.install = <span class="function"><span class="keyword">function</span> (<span class="params">Vue, options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> nCore = NCore()</span><br><span class="line">  <span class="keyword">var</span> nUi = NUI(nCore)</span><br><span class="line">  <span class="keyword">var</span> nStore = NStore(nCore)</span><br><span class="line">  <span class="keyword">var</span> nKit = NKit(nCore)</span><br><span class="line">  <span class="keyword">var</span> nRequest = NRequest(nCore)</span><br><span class="line">  Vue.prototype.$nativeCore = nCore</span><br><span class="line">  Vue.prototype.$nativeUi = nUi</span><br><span class="line">  Vue.prototype.$nativeStore = nStore</span><br><span class="line">  Vue.prototype.$nativeKit = nKit</span><br><span class="line">  Vue.prototype.$nativeRequest = nRequest</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> jsBridge;</span><br></pre></td></tr></table></figure>
+<p>使用插件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用前引入插件</span></span><br><span class="line"><span class="keyword">import</span> nativeVue <span class="keyword">from</span> <span class="string">'./native-vue.js'</span></span><br><span class="line">Vue.use(nativeVue);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> self = <span class="keyword">this</span></span><br><span class="line"><span class="keyword">var</span> params = &#123;<span class="string">'id'</span>:<span class="number">2</span>, <span class="string">'pageNum'</span>:<span class="number">3</span>, <span class="string">'pageSize'</span>:<span class="number">10</span>, <span class="string">'keyword'</span>:<span class="string">'xx'</span>&#125;</span><br><span class="line"><span class="keyword">this</span>.$nativeRequest.get(<span class="string">'https://api.github.com/'</span>, params, <span class="function"><span class="keyword">function</span> <span class="title">success</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(response)</span><br><span class="line">  self.resultMsg = response</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> <span class="title">fail</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(error)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>该库我自己已经投入使用，希望大家提出宝贵意见，帮助完善程序。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础用法"><span class="toc-number">1.</span> <span class="toc-text">基础用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#native-调用-js"><span class="toc-number">2.</span> <span class="toc-text">native 调用 js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-插件"><span class="toc-number">3.</span> <span class="toc-text">vue 插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后"><span class="toc-number">4.</span> <span class="toc-text">最后</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&text=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&title=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&is_video=false&description=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge&body=Check out this article: https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&title=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&title=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&title=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&title=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2019/04/11/混合开发-实现-js-和原生客户端的交互框架-js-native-bridge/&name=混合开发: 实现 js 和原生客户端的交互框架 js-native-bridge&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 刘海川 al-liu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
