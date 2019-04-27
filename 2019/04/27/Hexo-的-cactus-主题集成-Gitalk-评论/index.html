@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/292794-303e7cb635501b1e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/292794-c2be7ad6406cbfee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/292794-7c24408feb3c1d1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-04-27T00:44:41.199Z">
+<meta property="og:updated_time" content="2019-04-27T00:48:39.448Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 的 cactus 主题集成 Gitalk 评论">
 <meta name="twitter:description" content="为什么使用 Gitalk 做评论组件博客网站都需要支持评论系统，方便与他人交流文章细节。Gitalk 就是一款易用，易集成，支持 Markdown，使用 github 账号登录的评论组件，非常适合技术博客使用。 GItalk 评论界面如下：  Gitalk 的集成方法Gitalk 的集成很简单，查看 Gitalk 项目的 readme，简单概述就是下面几步。 准备工作 github 账号 一个仓库">
@@ -106,7 +106,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#为什么使用-Gitalk-做评论组件"><span class="toc-number">1.</span> <span class="toc-text">为什么使用 Gitalk 做评论组件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gitalk-的集成方法"><span class="toc-number">2.</span> <span class="toc-text">Gitalk 的集成方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">2.1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集成步骤"><span class="toc-number">2.2.</span> <span class="toc-text">集成步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看-Client-ID-Client-Secret"><span class="toc-number">2.3.</span> <span class="toc-text">查看 Client ID, Client Secret</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在-Hexo-的-cactus-主题中集成-Gitalk"><span class="toc-number">3.</span> <span class="toc-text">在 Hexo 的 cactus 主题中集成 Gitalk</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么使用-Gitalk-做评论组件"><span class="toc-number">1.</span> <span class="toc-text">为什么使用 Gitalk 做评论组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gitalk-的集成方法"><span class="toc-number">2.</span> <span class="toc-text">Gitalk 的集成方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作"><span class="toc-number">2.1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集成步骤"><span class="toc-number">2.2.</span> <span class="toc-text">集成步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看-Client-ID-Client-Secret"><span class="toc-number">2.3.</span> <span class="toc-text">查看 Client ID, Client Secret</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在-Hexo-的-cactus-主题中集成-Gitalk"><span class="toc-number">3.</span> <span class="toc-text">在 Hexo 的 cactus 主题中集成 Gitalk</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -145,16 +145,16 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="为什么使用-Gitalk-做评论组件"><a href="#为什么使用-Gitalk-做评论组件" class="headerlink" title="为什么使用 Gitalk 做评论组件"></a>为什么使用 Gitalk 做评论组件</h1><p>博客网站都需要支持评论系统，方便与他人交流文章细节。Gitalk 就是一款易用，易集成，支持 Markdown，使用 github 账号登录的评论组件，非常适合技术博客使用。</p>
+    <h2 id="为什么使用-Gitalk-做评论组件"><a href="#为什么使用-Gitalk-做评论组件" class="headerlink" title="为什么使用 Gitalk 做评论组件"></a>为什么使用 Gitalk 做评论组件</h2><p>博客网站都需要支持评论系统，方便与他人交流文章细节。Gitalk 就是一款易用，易集成，支持 Markdown，使用 github 账号登录的评论组件，非常适合技术博客使用。</p>
 <p>GItalk 评论界面如下：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/292794-4821bad345a7a29d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Gitalk 界面"></p>
-<h1 id="Gitalk-的集成方法"><a href="#Gitalk-的集成方法" class="headerlink" title="Gitalk 的集成方法"></a>Gitalk 的集成方法</h1><p>Gitalk 的集成很简单，查看 <a href="https://github.com/gitalk/gitalk">Gitalk 项目</a>的 readme，简单概述就是下面几步。</p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
+<h2 id="Gitalk-的集成方法"><a href="#Gitalk-的集成方法" class="headerlink" title="Gitalk 的集成方法"></a>Gitalk 的集成方法</h2><p>Gitalk 的集成很简单，查看 <a href="https://github.com/gitalk/gitalk">Gitalk 项目</a>的 readme，简单概述就是下面几步。</p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ol>
 <li>github 账号</li>
 <li>一个仓库 repo 用于保存评论，可以用 xxx.github.io，如：<a href="https://github.com/al-liu/al-liu.github.io">al-liu.github.io</a></li>
 <li>注册一个新的 OAuth application，<a href="https://github.com/settings/applications/new">点击这里注册</a></li>
 </ol>
-<h2 id="集成步骤"><a href="#集成步骤" class="headerlink" title="集成步骤"></a>集成步骤</h2><ol>
+<h3 id="集成步骤"><a href="#集成步骤" class="headerlink" title="集成步骤"></a>集成步骤</h3><ol>
 <li>引用 gitalk 的 js，css，有两种方式</li>
 </ol>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=<span class="string">"stylesheet"</span> href=<span class="string">"https://unpkg.com/gitalk/dist/gitalk.css"</span>&gt;</span><br><span class="line">&lt;script src=<span class="string">"https://unpkg.com/gitalk/dist/gitalk.min.js"</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
@@ -163,11 +163,11 @@
 <li>添加一个 container 到页面，<code>&lt;div id=&quot;gitalk-container&quot;&gt;&lt;/div&gt;</code>。</li>
 <li>生成 Gitalk 插件，<code>const gitalk = new Gitalk({…})</code> 其中 <code>Client ID</code>, <code>Client Secret</code> 来自 Github OAuth application。</li>
 </ol>
-<h2 id="查看-Client-ID-Client-Secret"><a href="#查看-Client-ID-Client-Secret" class="headerlink" title="查看 Client ID, Client Secret"></a>查看 Client ID, Client Secret</h2><p>登录  github 后：</p>
+<h3 id="查看-Client-ID-Client-Secret"><a href="#查看-Client-ID-Client-Secret" class="headerlink" title="查看 Client ID, Client Secret"></a>查看 Client ID, Client Secret</h3><p>登录  github 后：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/292794-303e7cb635501b1e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一步"></p>
 <p><img src="https://upload-images.jianshu.io/upload_images/292794-c2be7ad6406cbfee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第二步"></p>
 <p><img src="https://upload-images.jianshu.io/upload_images/292794-7c24408feb3c1d1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第三步"></p>
-<h1 id="在-Hexo-的-cactus-主题中集成-Gitalk"><a href="#在-Hexo-的-cactus-主题中集成-Gitalk" class="headerlink" title="在 Hexo 的 cactus 主题中集成 Gitalk"></a>在 Hexo 的 cactus 主题中集成 Gitalk</h1><p>在 <code>themes/cactus/_config.yml</code> 配置文件中，配置 Gitalk。</p>
+<h2 id="在-Hexo-的-cactus-主题中集成-Gitalk"><a href="#在-Hexo-的-cactus-主题中集成-Gitalk" class="headerlink" title="在 Hexo 的 cactus 主题中集成 Gitalk"></a>在 Hexo 的 cactus 主题中集成 Gitalk</h2><p>在 <code>themes/cactus/_config.yml</code> 配置文件中，配置 Gitalk。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">disqus:</span><br><span class="line">    enabled: false # 确定 disqus 评论是关闭的</span><br><span class="line">    shortname: cactus-1</span><br><span class="line">gitalk:</span><br><span class="line">    enabled: true # 开关开启</span><br><span class="line">    owner: al-liu # 你的 github 用户名</span><br><span class="line">    repo: al-liu.github.io # 保存评论的 repo 库</span><br><span class="line">    admin: [&apos;al-liu&apos;] # 管理员，你的 github 用户名</span><br><span class="line">    clientID: xxx</span><br><span class="line">    clientSecret: xxx</span><br></pre></td></tr></table></figure>
 <p>cactus 主题默认集成了 disqus 评论系统，将它关闭 <code>enabled</code> 设置成 <code>false</code>。</p>
 <p>在 <code>themes/cactus/layout/_partial/comments.ejs</code> 中，</p>
@@ -221,7 +221,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#为什么使用-Gitalk-做评论组件"><span class="toc-number">1.</span> <span class="toc-text">为什么使用 Gitalk 做评论组件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gitalk-的集成方法"><span class="toc-number">2.</span> <span class="toc-text">Gitalk 的集成方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">2.1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集成步骤"><span class="toc-number">2.2.</span> <span class="toc-text">集成步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看-Client-ID-Client-Secret"><span class="toc-number">2.3.</span> <span class="toc-text">查看 Client ID, Client Secret</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在-Hexo-的-cactus-主题中集成-Gitalk"><span class="toc-number">3.</span> <span class="toc-text">在 Hexo 的 cactus 主题中集成 Gitalk</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么使用-Gitalk-做评论组件"><span class="toc-number">1.</span> <span class="toc-text">为什么使用 Gitalk 做评论组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gitalk-的集成方法"><span class="toc-number">2.</span> <span class="toc-text">Gitalk 的集成方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备工作"><span class="toc-number">2.1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集成步骤"><span class="toc-number">2.2.</span> <span class="toc-text">集成步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看-Client-ID-Client-Secret"><span class="toc-number">2.3.</span> <span class="toc-text">查看 Client ID, Client Secret</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在-Hexo-的-cactus-主题中集成-Gitalk"><span class="toc-number">3.</span> <span class="toc-text">在 Hexo 的 cactus 主题中集成 Gitalk</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
