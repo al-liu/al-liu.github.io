@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="服务端的技术选型服务端使用 Java 编写，用 maven 作为包管理工具，基于 SpringBoot 2.0.4，SpringBoot 的出现对于 Java Web 开发人员太友好，大大简化开发，省去很多配置，依赖变得很简洁。SpringBoot Starter 将应用所需的各种依赖聚合成一项依赖，如 一项 spring-boot-starter-web 依赖，相当于 spring-boot-s">
+<meta name="keywords" content="Java, iOS, Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="全栈开发探索 - Java 服务端">
+<meta property="og:url" content="https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/index.html">
+<meta property="og:site_name" content="刘海川的技术博客">
+<meta property="og:description" content="服务端的技术选型服务端使用 Java 编写，用 maven 作为包管理工具，基于 SpringBoot 2.0.4，SpringBoot 的出现对于 Java Web 开发人员太友好，大大简化开发，省去很多配置，依赖变得很简洁。SpringBoot Starter 将应用所需的各种依赖聚合成一项依赖，如 一项 spring-boot-starter-web 依赖，相当于 spring-boot-s">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/292794-f2f6fd04c8065586.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/310">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/292794-0c6570e1aa0a49be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/310">
+<meta property="og:updated_time" content="2019-05-28T14:32:53.151Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="全栈开发探索 - Java 服务端">
+<meta name="twitter:description" content="服务端的技术选型服务端使用 Java 编写，用 maven 作为包管理工具，基于 SpringBoot 2.0.4，SpringBoot 的出现对于 Java Web 开发人员太友好，大大简化开发，省去很多配置，依赖变得很简洁。SpringBoot Starter 将应用所需的各种依赖聚合成一项依赖，如 一项 spring-boot-starter-web 依赖，相当于 spring-boot-s">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/292794-f2f6fd04c8065586.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/310">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>全栈开发探索 - Java 服务端</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/05/27/全栈开发探索-项目背景/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&text=全栈开发探索 - Java 服务端"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&title=全栈开发探索 - Java 服务端"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&is_video=false&description=全栈开发探索 - Java 服务端"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=全栈开发探索 - Java 服务端&body=Check out this article: https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&title=全栈开发探索 - Java 服务端"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&title=全栈开发探索 - Java 服务端"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&title=全栈开发探索 - Java 服务端"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&title=全栈开发探索 - Java 服务端"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&name=全栈开发探索 - Java 服务端&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端的技术选型"><span class="toc-number">1.</span> <span class="toc-text">服务端的技术选型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目目录结构"><span class="toc-number">2.</span> <span class="toc-text">项目目录结构</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        全栈开发探索 - Java 服务端
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">刘海川的技术博客</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-05-28T14:32:30.000Z" itemprop="datePublished">2019-05-28</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="服务端的技术选型"><a href="#服务端的技术选型" class="headerlink" title="服务端的技术选型"></a>服务端的技术选型</h2><p>服务端使用 Java 编写，用 maven 作为包管理工具，基于 SpringBoot 2.0.4，SpringBoot 的出现对于 Java Web 开发人员太友好，大大简化开发，省去很多配置，依赖变得很简洁。SpringBoot Starter 将应用所需的各种依赖聚合成一项依赖，如 一项 <code>spring-boot-starter-web</code> 依赖，相当于 <code>spring-boot-starter</code>, <code>spring-boot-starter-tomcat</code>, <code>jackson-databind</code>, <code>spring-web</code>, <code>spring-webmvc</code> 这几个依赖的总和。可以想到使用 starter 依赖，pom 文件看起来会简洁很多。</p>
+<p>Spring Boot 的自动配置功能则削减了 Spring 配置的数量，Sping Boot 会考虑应用中的其他因素并推断你所需要的 Spring 配置。如 Spring Boot 如果发现类路径下有 Spring MVC，它就会自动配置 Spring MVC 的多个 bean，如视图解析器，资源处理器，消息转换器等，我们只需要编写处理请求的控制器就可以。这让开发人员将精力只关注在业务开发上，大大提高开发效率。</p>
+<p>所以毋庸置疑开发新项目，Spring Boot 是首选。</p>
+<p>一个后台项目一定会连接数据库，数据库我使用 mysql 5.7，主要是因为 mysql 免费，使用广泛，开发环境建议使用 Docker 容器启动 mysql，使用容器可以很方便的安装数据库，节省时间。</p>
+<p>ORM 框架使用 MyBatis，MyBatis 的结果集映射功能强大，使用简单且灵活。部分查询功能涉及数据的分页，使用三方库 PageHelper 做分页。</p>
+<p>身份鉴权，权限控制，安全框架我使用 Shiro，该框架轻量，接口简单又功能强大。</p>
+<p>微信推送涉及调用其他内部系统接口，所以还需要使用 Netty 进行 TCP 通信。</p>
+<p>我还引入了一个 spring-boot-starter-aop 库，用于控制器的日志打印。</p>
+<p>以下就是我项目的 pom 文件内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.bots.itoa<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>EventCommand<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.9-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>EventCommand<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>EventCommand project for Bots<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">relativePath</span> /&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.reporting.outputEncoding</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- Mysql --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- MyBatis --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- Shiro --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.shiro<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>shiro-spring<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--PageHelper --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.pagehelper<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>pagehelper-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- AOP --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- netty --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.netty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>netty-all<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">fork</span>&gt;</span>true<span class="tag">&lt;/<span class="name">fork</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>通常项目都是保存文件后自动编译，我们添加好依赖后保存一下 pom 文件，IDE 就会去 maven 中心库下载相应的 jar 包，但是有时候编译完，pom 文件提示报错，我们就要看下提示信息，是具体哪个包 miss 或有其他错误，去 maven 本地仓库找到对应的包查看是否下载好，如果没有下载好则最好删除对应的包文件夹，重新保存下 pom 文件重新编译下载 jar 包，如果我们的 jar 包反复下载不下来，则需要检查网络或可以去 maven 的 setting.xml 配置文件中配置阿里云的镜像地址。</p>
+<h2 id="项目目录结构"><a href="#项目目录结构" class="headerlink" title="项目目录结构"></a>项目目录结构</h2><p>目录结构截图如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/292794-f2f6fd04c8065586.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/310" alt="目录结构.png"></p>
+<p>主包 <code>com.bots.itoa.EventCommand</code> 下是项目的启动文件 <code>EventCommandApplication.java</code> ，其他所有的文件，文件夹都在该包下。如果配置类，组件类不在该包下，会发生无法自动注入的问题，因为 <code>EventCommandApplication</code> 类的 <code>@SpringBootApplication</code> 注解中开启了自动扫描，扫描的正是 <code>com.bots.itoa.EventCommand</code> 这个包。不在这个包下我们需要显式声明自动扫描注解，并指定扫描哪个包。</p>
+<p><code>base.bean</code> 包下放了一些常用的基础 bean，有对响应结果的封装（状态码，结果信息，数据等），对分页的封装等。<code>configuration</code> 下放的是一些配置文件，如 <code>ShiroConfig</code> 是 Shiro 的配置文件，定义 <code>ShiroFilterFactoryBean</code> 具体路由对应的权限等。<code>controller</code> 中是各个业务模块的 controller 文件，定义业务端点，也就是对客户端暴露的接口，如 /login POST 就是项目的登录接口，用于鉴权用户身份。</p>
+<p><code>/login</code> 示例代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ResultInfo&lt;Object&gt; <span class="title">login</span><span class="params">(@RequestBody Map&lt;String, String&gt; params)</span> <span class="keyword">throws</span> BusinessException </span>&#123;</span><br><span class="line">   String username = params.get(<span class="string">"username"</span>);</span><br><span class="line">   String password = params.get(<span class="string">"password"</span>);</span><br><span class="line">   <span class="keyword">if</span> (username == <span class="keyword">null</span> || username.isEmpty()) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> BusinessException(<span class="string">"用户名不能为空！"</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> (password == <span class="keyword">null</span> || password.isEmpty()) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> BusinessException(<span class="string">"密码不能为空！"</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   UsernamePasswordToken token = <span class="keyword">new</span> UsernamePasswordToken(username, password);</span><br><span class="line">   Subject currentSubject = SecurityUtils.getSubject();</span><br><span class="line">   String msg = <span class="string">"未知错误"</span>;</span><br><span class="line">   <span class="keyword">try</span> &#123;</span><br><span class="line">      logger.info(<span class="string">"对用户["</span> + username + <span class="string">"]进行登录验证..验证开始"</span>);</span><br><span class="line">      currentSubject.login(token);</span><br><span class="line">      <span class="keyword">if</span> (currentSubject.isAuthenticated()) &#123;</span><br><span class="line">         UserEntity userInfo = userService.getUser(currentSubject.getPrincipal().toString());</span><br><span class="line">         <span class="keyword">return</span> ResultInfo.Success(userInfo);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         msg = <span class="string">"登录失败"</span>;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125; <span class="keyword">catch</span> (UnknownAccountException uae) &#123;</span><br><span class="line">      msg = <span class="string">"用户名错误"</span>;</span><br><span class="line">   &#125; <span class="keyword">catch</span> (IncorrectCredentialsException ice) &#123;</span><br><span class="line">      msg = <span class="string">"密码错误"</span>;</span><br><span class="line">   &#125; <span class="keyword">catch</span> (LockedAccountException lae) &#123;</span><br><span class="line">      msg = <span class="string">"账户已锁定"</span>;</span><br><span class="line">   &#125; <span class="keyword">catch</span> (ExcessiveAttemptsException eae) &#123;</span><br><span class="line">      msg = <span class="string">"尝试次数过多"</span>;</span><br><span class="line">   &#125; <span class="keyword">catch</span> (AuthenticationException ae) &#123;</span><br><span class="line">      msg = <span class="string">"用户名/密码不正确"</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   token.clear();</span><br><span class="line">   <span class="keyword">return</span> ResultInfo.Error(msg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>dao</code> 中是 mabatis 的 mapper 接口文件，这些接口方法定义数据库的增删改查操作，方法名会和 mapper.xml 配置文件中的数据库操作 id 一一对应。</p>
+<p>mapper 接口代码示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MessageMapper</span> </span>&#123;</span><br><span class="line">   <span class="meta">@Insert</span>(&#123;<span class="string">"insert into message (title, description, create_user_id) values (#&#123;title&#125;,#&#123;description&#125;,#&#123;createUser.id&#125;)"</span>&#125;)</span><br><span class="line">   <span class="meta">@Options</span>(useGeneratedKeys = <span class="keyword">true</span>, keyProperty=<span class="string">"id"</span>)</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">insertMessage</span><span class="params">(Message message)</span></span>;</span><br><span class="line">   <span class="meta">@Delete</span>(&#123;<span class="string">"delete from message where message_id = #&#123;id&#125;"</span>&#125;)</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">deleteMessageById</span><span class="params">(Integer id)</span></span>;</span><br><span class="line">   <span class="meta">@Update</span>(&#123;<span class="string">"update message set title=#&#123;title&#125;,description = #&#123;description&#125; where message_id = #&#123;id&#125;"</span>&#125;)</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">updateMessage</span><span class="params">(Message message)</span></span>;</span><br><span class="line">   <span class="meta">@Select</span>(&#123;<span class="string">"select count(1) from user_message where user_user_id = #&#123;userId&#125; and isRead = 0"</span>&#125;)</span><br><span class="line">   <span class="function">Integer <span class="title">countUnread</span><span class="params">(Integer userId)</span></span>;</span><br><span class="line">   <span class="function">List&lt;Message&gt; <span class="title">selectMessageByContent</span><span class="params">(String content)</span></span>;</span><br><span class="line">   <span class="function">Message <span class="title">selectMessageById</span><span class="params">(Integer id)</span></span>;</span><br><span class="line">   <span class="function">List&lt;Message&gt; <span class="title">selectAllMessage</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>domain</code> 中就是业务的实体，如 Message 实体，定义消息的各个属性，如标题 titile，内容 description 等。</p>
+<p>示例代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Message</span> </span>&#123;</span><br><span class="line">   <span class="meta">@JsonView</span>(value = View.Summary.class)</span><br><span class="line">   <span class="keyword">private</span> Integer id;</span><br><span class="line">   <span class="meta">@JsonView</span>(value = View.Summary.class)</span><br><span class="line">   <span class="meta">@NotBlank</span>(message=<span class="string">"&#123;message.title.notBlank&#125;"</span>)</span><br><span class="line">   <span class="meta">@Length</span>(min = <span class="number">1</span>, max = <span class="number">100</span>, message = <span class="string">"&#123;message.title.length&#125;"</span>)</span><br><span class="line">   <span class="keyword">private</span> String title;</span><br><span class="line">   <span class="meta">@JsonView</span>(value = View.Summary.class)</span><br><span class="line">   <span class="meta">@NotBlank</span>(message=<span class="string">"&#123;message.description.notBlank&#125;"</span>)</span><br><span class="line">   <span class="meta">@Length</span>(min = <span class="number">1</span>, max = <span class="number">300</span>, message = <span class="string">"&#123;message.description.length&#125;"</span>)</span><br><span class="line">   <span class="keyword">private</span> String description;</span><br><span class="line">   <span class="comment">// 0 未读 1 已读</span></span><br><span class="line">   <span class="meta">@JsonView</span>(value = View.Summary.class)</span><br><span class="line">   <span class="keyword">private</span> Integer isRead;</span><br><span class="line">   <span class="keyword">private</span> List&lt;Integer&gt; targetUserIds;</span><br><span class="line">   <span class="meta">@JsonView</span>(value = View.Detail.class)</span><br><span class="line">   <span class="keyword">private</span> UserEntity createUser;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>@Length</code>，<code>@NotBlank</code> 是一些字段的校验，会再 controller 中发挥作用。而 <code>@JsonView</code> 可以定义哪些数据作为响应返回，同样是在 controller 中发挥作用。</p>
+<p><code>service</code> 中定义服务的接口和实现类，通常我们把功能分成服务模块，每个模块的功能定义一个接口文件，模块的功能对应接口的方法，然后创建实现类去实现这些接口。有时我们写一个功能会用到多个服务模块的功能。</p>
+<p><code>util</code> 中是常用工具类，比如我的就包括一些异常处理，tcp 通信，日志打印，表格解析等等。</p>
+<p><code>resources</code> 中存放程序的配置文件，程序的端口，数据库连接和一些三方库的配置等。里面还有 mybatis 的配置文件和mapper 配置文件。<br>如图：<br><img src="https://upload-images.jianshu.io/upload_images/292794-0c6570e1aa0a49be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/310" alt="resources.png"></p>
+<p>因为 SpringBoot 内置了 Tomcat，所以我们直接运行 <code>EventCommandApplication</code> 这个入口文件就可以启动程序了。</p>
+<p>以上就是我这个项目的基础技术选型和项目结构。</p>
+
+  </div>
+</article>
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+    <div id="gitalk-container"></div>
+    <script type="text/javascript">
+        var gitalk = new Gitalk({
+            clientID: '46f9862d762f2b91e265',
+            clientSecret: 'b1a5c3d47828b1c1ab0b25081463e2b94f132245',
+            id: md5(window.location.pathname),
+            repo: 'al-liu.github.io',
+            owner: 'al-liu',
+            admin: 'al-liu',
+            distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端的技术选型"><span class="toc-number">1.</span> <span class="toc-text">服务端的技术选型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目目录结构"><span class="toc-number">2.</span> <span class="toc-text">项目目录结构</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&text=全栈开发探索 - Java 服务端"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&title=全栈开发探索 - Java 服务端"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&is_video=false&description=全栈开发探索 - Java 服务端"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=全栈开发探索 - Java 服务端&body=Check out this article: https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&title=全栈开发探索 - Java 服务端"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&title=全栈开发探索 - Java 服务端"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&title=全栈开发探索 - Java 服务端"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&title=全栈开发探索 - Java 服务端"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2019/05/28/全栈开发探索-Java-服务端/&name=全栈开发探索 - Java 服务端&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 刘海川 al-liu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
