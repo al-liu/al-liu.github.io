@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言我做的银行 it 综合管理平台项目使用的 Maven 作为项目管理工具，Maven 工具可以对 Java 项目进行构建和依赖管理。下面简单总结下我对 Maven 的使用。 安装下载地址是 https://maven.apache.org/download.cgi 目前最新的是 Maven 3.6.1版本。下载成功后解压缩，解压后目录如下： 配置配置本地 Maven 仓库创建一个目录作为本地库，">
+<meta name="keywords" content="Java, iOS, Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="全栈开发探索 - Maven 的使用">
+<meta property="og:url" content="https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/index.html">
+<meta property="og:site_name" content="刘海川的技术博客">
+<meta property="og:description" content="前言我做的银行 it 综合管理平台项目使用的 Maven 作为项目管理工具，Maven 工具可以对 Java 项目进行构建和依赖管理。下面简单总结下我对 Maven 的使用。 安装下载地址是 https://maven.apache.org/download.cgi 目前最新的是 Maven 3.6.1版本。下载成功后解压缩，解压后目录如下： 配置配置本地 Maven 仓库创建一个目录作为本地库，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/292794-0e150525bf419876.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/292794-8322b48ed85ace18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/292794-c8996a089c203062.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/292794-8398c2de207ac8fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/292794-77e5c8367d877d52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/292794-16ad5df1c65a894d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-06-02T05:27:46.130Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="全栈开发探索 - Maven 的使用">
+<meta name="twitter:description" content="前言我做的银行 it 综合管理平台项目使用的 Maven 作为项目管理工具，Maven 工具可以对 Java 项目进行构建和依赖管理。下面简单总结下我对 Maven 的使用。 安装下载地址是 https://maven.apache.org/download.cgi 目前最新的是 Maven 3.6.1版本。下载成功后解压缩，解压后目录如下： 配置配置本地 Maven 仓库创建一个目录作为本地库，">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/292794-0e150525bf419876.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>全栈开发探索 - Maven 的使用</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/05/28/全栈开发探索-Java-服务端/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&text=全栈开发探索 - Maven 的使用"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&title=全栈开发探索 - Maven 的使用"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&is_video=false&description=全栈开发探索 - Maven 的使用"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=全栈开发探索 - Maven 的使用&body=Check out this article: https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&title=全栈开发探索 - Maven 的使用"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&title=全栈开发探索 - Maven 的使用"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&title=全栈开发探索 - Maven 的使用"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&title=全栈开发探索 - Maven 的使用"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&name=全栈开发探索 - Maven 的使用&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">3.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置本地-Maven-仓库"><span class="toc-number">3.1.</span> <span class="toc-text">配置本地 Maven 仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置网络代理"><span class="toc-number">3.2.</span> <span class="toc-text">配置网络代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置中心仓库镜像地址"><span class="toc-number">3.3.</span> <span class="toc-text">配置中心仓库镜像地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDE-中配置-Maven"><span class="toc-number">4.</span> <span class="toc-text">IDE 中配置 Maven</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Eclipse-配置-Maven"><span class="toc-number">4.1.</span> <span class="toc-text">Eclipse 配置 Maven</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IDEA-配置-Maven"><span class="toc-number">4.2.</span> <span class="toc-text">IDEA 配置 Maven</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">5.</span> <span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-Maven-构建多模块项目"><span class="toc-number">6.</span> <span class="toc-text">使用 Maven 构建多模块项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后记"><span class="toc-number">7.</span> <span class="toc-text">后记</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        全栈开发探索 - Maven 的使用
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">刘海川的技术博客</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-06-02T05:27:09.000Z" itemprop="datePublished">2019-06-02</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我做的银行 it 综合管理平台项目使用的 Maven 作为项目管理工具，Maven 工具可以对 Java 项目进行构建和依赖管理。<br>下面简单总结下我对 Maven 的使用。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>下载地址是 <a href="https://maven.apache.org/download.cgi" target="_blank" rel="noopener">https://maven.apache.org/download.cgi</a> 目前最新的是 Maven 3.6.1版本。<br>下载成功后解压缩，解压后目录如下：<br><img src="https://upload-images.jianshu.io/upload_images/292794-0e150525bf419876.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Maven 目录结构"></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="配置本地-Maven-仓库"><a href="#配置本地-Maven-仓库" class="headerlink" title="配置本地 Maven 仓库"></a>配置本地 Maven 仓库</h3><p>创建一个目录作为本地库，用于存放 Maven 从远程中心库下载好的 jar 包<br>如：D:/Program Files/Maven/Repository<br>修改 <code>setting.xml</code> 配置文件，找到安装目录中 /conf/settings.xml 文件并修改，<br>找到 <code>&lt;localRepository&gt;</code> 标签配置本地库地址：<br><code>&lt;localRepository&gt;D:/Program Files/Maven/Repository&lt;/localRepository&gt;</code></p>
+<h3 id="配置网络代理"><a href="#配置网络代理" class="headerlink" title="配置网络代理"></a>配置网络代理</h3><p>如果公司使用内网，需要代理才能上外网，可以在  /conf/settings.xml 中配置网络代理</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">proxies</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- proxy</span></span><br><span class="line"><span class="comment">   | Specification for one proxy, to be used in connecting to the network.</span></span><br><span class="line"><span class="comment">   |</span></span><br><span class="line"><span class="comment">  --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">proxy</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">id</span>&gt;</span>my-proxy<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">active</span>&gt;</span>true<span class="tag">&lt;/<span class="name">active</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">protocol</span>&gt;</span>http<span class="tag">&lt;/<span class="name">protocol</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">host</span>&gt;</span>172.10.10.35<span class="tag">&lt;/<span class="name">host</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">port</span>&gt;</span>8080<span class="tag">&lt;/<span class="name">port</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">proxy</span>&gt;</span>    </span><br><span class="line"><span class="tag">&lt;/<span class="name">proxies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="配置中心仓库镜像地址"><a href="#配置中心仓库镜像地址" class="headerlink" title="配置中心仓库镜像地址"></a>配置中心仓库镜像地址</h3><p>国内网络有时连接 Maven 中心库很慢，就需要借助阿里云的 Maven 中心库镜像地址。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus-aliyun<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>Nexus aliyun<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>[http://maven.aliyun.com/nexus/content/groups/public](http://maven.aliyun.com/nexus/content/groups/public)<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>配置好 <code>settings.xml</code> 后，还需要在我们常用的 IDE 中配置 Maven。</p>
+<h2 id="IDE-中配置-Maven"><a href="#IDE-中配置-Maven" class="headerlink" title="IDE 中配置 Maven"></a>IDE 中配置 Maven</h2><h3 id="Eclipse-配置-Maven"><a href="#Eclipse-配置-Maven" class="headerlink" title="Eclipse 配置 Maven"></a>Eclipse 配置 Maven</h3><p>打开 Eclipse 的偏好设置 /Window/Preferences，找到 Maven - User Settings 配置项。<br>User Settings 配置项中设置 Maven 的 User Settings 为 D:\Program Files\apache-maven-3.6.0\conf\settings.xml<br>Local Respository 设置为本地库地址，D:/Program Files/Maven/Repository。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/292794-8322b48ed85ace18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="eclipse 配置"></p>
+<p>点击 Apply and Close 应用配置。</p>
+<h3 id="IDEA-配置-Maven"><a href="#IDEA-配置-Maven" class="headerlink" title="IDEA 配置 Maven"></a>IDEA 配置 Maven</h3><p>File - Settings 打开 IDEA 的设置，找到 Maven 配置项，分别设置 User settings file 和 Local repository 配置项，并勾选 Override。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/292794-c8996a089c203062.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IDEA 配置"></p>
+<p>点击 Apply 应用配置。</p>
+<p>配置好后，在 pom 文件中添加依赖后保存，IDE 会自动下载依赖的 jar 包。<br>如果显示依赖下载完成，pom 文件还是报错很可能是某些包没下载完整，删掉已下载的 jar 包所在文件夹，重新尝试下载。</p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p><code>-D</code> 指定参数。<br><code>-P</code> 指定 Profile 配置，加载指定的应用配置文件，如 <code>mvn package –Pdev</code>，使用 Maven 打包项目，指定 dev 的 Profile 配置，项目会加载  resources 目录下的 <code>application-dev.properties</code> 项目配置文件，项目默认加载的是 <code>application.properties</code>。<br><code>mvn package -Dmaven.test.skip=true</code> 编译打包项目，并跳过单元测试。<br><code>mvn clean</code> 清理项目。<br><code>mvn test</code> 运行单元测试。<br><code>mvn compile</code> 编译项目。</p>
+<h2 id="使用-Maven-构建多模块项目"><a href="#使用-Maven-构建多模块项目" class="headerlink" title="使用 Maven 构建多模块项目"></a>使用 Maven 构建多模块项目</h2><p>大型项目中，合理的模块拆分，便于代码的复用，维护和管理，所以我们大多使用 Maven 构建多模块项目。<br>以 Eclipse 为例建一个 Maven 项目。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/292794-8398c2de207ac8fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多模块-父工程"></p>
+<p>选择 Maven Project 建一个父工程。</p>
+<p>建每个子模块的时候选择 Maven Module。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/292794-77e5c8367d877d52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="新建模块"></p>
+<p>Parent Project 处选择之前建立的父工程，Finish 之后，新建的子模块就在这个父工程下了。</p>
+<p>完成后的目录结构如下：<br><img src="https://upload-images.jianshu.io/upload_images/292794-16ad5df1c65a894d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="目录结构"></p>
+<p>父工程的 POM 文件，主要维护依赖的版本信息，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring-cloud-version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.bots.push<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>domain<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;app-svr-version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样，子模块添加对应的依赖就不用写每个依赖的 <code>&lt;version&gt;</code> 版本号。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>每个技术栈都有对应自己的项目管理工具，Java 有 Maven，Gradle，iOS 有 CocosPod，前端有 Webpack，了解对应技术栈的项目管理工具，可以让开发事半功倍。以上只是 Maven 使用的一小部分内容，仅供参考。</p>
+
+  </div>
+</article>
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+    <div id="gitalk-container"></div>
+    <script type="text/javascript">
+        var gitalk = new Gitalk({
+            clientID: '46f9862d762f2b91e265',
+            clientSecret: 'b1a5c3d47828b1c1ab0b25081463e2b94f132245',
+            id: md5(window.location.pathname),
+            repo: 'al-liu.github.io',
+            owner: 'al-liu',
+            admin: 'al-liu',
+            distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">3.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置本地-Maven-仓库"><span class="toc-number">3.1.</span> <span class="toc-text">配置本地 Maven 仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置网络代理"><span class="toc-number">3.2.</span> <span class="toc-text">配置网络代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置中心仓库镜像地址"><span class="toc-number">3.3.</span> <span class="toc-text">配置中心仓库镜像地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDE-中配置-Maven"><span class="toc-number">4.</span> <span class="toc-text">IDE 中配置 Maven</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Eclipse-配置-Maven"><span class="toc-number">4.1.</span> <span class="toc-text">Eclipse 配置 Maven</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IDEA-配置-Maven"><span class="toc-number">4.2.</span> <span class="toc-text">IDEA 配置 Maven</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">5.</span> <span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-Maven-构建多模块项目"><span class="toc-number">6.</span> <span class="toc-text">使用 Maven 构建多模块项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后记"><span class="toc-number">7.</span> <span class="toc-text">后记</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&text=全栈开发探索 - Maven 的使用"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&title=全栈开发探索 - Maven 的使用"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&is_video=false&description=全栈开发探索 - Maven 的使用"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=全栈开发探索 - Maven 的使用&body=Check out this article: https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&title=全栈开发探索 - Maven 的使用"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&title=全栈开发探索 - Maven 的使用"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&title=全栈开发探索 - Maven 的使用"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&title=全栈开发探索 - Maven 的使用"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2019/06/02/全栈开发探索-Maven-的使用/&name=全栈开发探索 - Maven 的使用&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 刘海川 al-liu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
