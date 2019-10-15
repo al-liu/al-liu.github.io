@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="年前做过一个公司内部的后管平台，前端使用 vue.js 框架开发，基于 vue-cli3 脚手架构建项目，ui 组件库使用 Element-UI，其他组件还包括 axios，echarts，vue-router，vuex 等，该项目功能简单，涉及页面 40 个，都是简单的表单或者列表页。上线的时候直接 npm run build 命令打包，未在 vue.config.js 中做任何配置，将 dis">
+<meta name="keywords" content="Java, iOS, Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-cli3 webpack 打包优化实践总结">
+<meta property="og:url" content="https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/index.html">
+<meta property="og:site_name" content="刘海川的技术博客">
+<meta property="og:description" content="年前做过一个公司内部的后管平台，前端使用 vue.js 框架开发，基于 vue-cli3 脚手架构建项目，ui 组件库使用 Element-UI，其他组件还包括 axios，echarts，vue-router，vuex 等，该项目功能简单，涉及页面 40 个，都是简单的表单或者列表页。上线的时候直接 npm run build 命令打包，未在 vue.config.js 中做任何配置，将 dis">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/10/14/GBisLNlSWqI1mg5.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/10/15/IjcW9CZ5KubxoUn.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/10/15/UqCY6BAjFfWTwsG.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/10/15/lORWkoGmUM53w1P.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/10/15/gh6wjFm8v4CfbEd.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/10/15/zftE23aSDOwbdMx.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/10/15/9ydBwaDFkZLm5I4.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/10/15/vZdoN3JI1HwiGDQ.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/10/15/dKbhnyepXBwzFr4.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/10/15/IjcW9CZ5KubxoUn.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/10/15/gQM1wE5uzJGj2IF.jpg">
+<meta property="og:updated_time" content="2019-10-15T09:17:55.357Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue-cli3 webpack 打包优化实践总结">
+<meta name="twitter:description" content="年前做过一个公司内部的后管平台，前端使用 vue.js 框架开发，基于 vue-cli3 脚手架构建项目，ui 组件库使用 Element-UI，其他组件还包括 axios，echarts，vue-router，vuex 等，该项目功能简单，涉及页面 40 个，都是简单的表单或者列表页。上线的时候直接 npm run build 命令打包，未在 vue.config.js 中做任何配置，将 dis">
+<meta name="twitter:image" content="https://i.loli.net/2019/10/14/GBisLNlSWqI1mg5.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>vue-cli3 webpack 打包优化实践总结</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/10/13/WebViewJsBridge-Android-做一个好用的桥接库/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&text=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&title=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&is_video=false&description=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=vue-cli3 webpack 打包优化实践总结&body=Check out this article: https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&title=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&title=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&title=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&title=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&name=vue-cli3 webpack 打包优化实践总结&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#着手优化项目打包"><span class="toc-number">1.</span> <span class="toc-text">着手优化项目打包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#路由懒加载"><span class="toc-number">1.1.</span> <span class="toc-text">路由懒加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#路由懒加载分组"><span class="toc-number">1.2.</span> <span class="toc-text">路由懒加载分组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#node-modules-打包"><span class="toc-number">1.3.</span> <span class="toc-text">node_modules 打包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gzip-压缩"><span class="toc-number">1.4.</span> <span class="toc-text">gzip 压缩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vuex-动态注册模块"><span class="toc-number">1.5.</span> <span class="toc-text">Vuex 动态注册模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具"><span class="toc-number">1.6.</span> <span class="toc-text">工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文章"><span class="toc-number">2.</span> <span class="toc-text">参考文章</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        vue-cli3 webpack 打包优化实践总结
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">刘海川的技术博客</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-14T13:21:41.000Z" itemprop="datePublished">2019-10-14</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>年前做过一个公司内部的后管平台，前端使用 vue.js 框架开发，基于 vue-cli3 脚手架构建项目，ui 组件库使用 Element-UI，其他组件还包括 axios，echarts，vue-router，vuex 等，该项目功能简单，涉及页面 40 个，都是简单的表单或者列表页。上线的时候直接 <code>npm run build</code> 命令打包，未在 vue.config.js 中做任何配置，将 dist 打好的包放到 nginx 服务器，做个反向代理就用上了。</p>
+<p>未做优化的打包结果如下：<br><img src="https://i.loli.net/2019/10/14/GBisLNlSWqI1mg5.jpg" alt="未做路由组件动态引入.jpg"></p>
+<p>可以看出 <code>chunk-vendors.82702712.js</code> 文件大小有 1M 多，对应的 css 文件也有 194 kb，<code>app.653b22c5.js</code> 有 172 kb，项目中所有的三方库都打包到 <code>chunk-vendors.82702712.js</code> 中，而所有的页面，自定义组件等都在 <code>app.653b22c5.js</code> 中。因为没有使用动态加载，所以这些 1M，几百 kb 的 js 都会在刚访问网站的时候一起加载，pc 上还好，一旦放到移动端，弱网情况下只能给用户展示一个大白板。</p>
+<p>访问项目主页，通过 Chrome 的 Instrument converge 功能查看 js，css 的资源使用率，发现 <code>chunk-vendors.82702712.js</code> 的未使用率达到 85.4%，对应的 <code>chunk-vendors.ea3fa8e3.css</code> 未使用率 98.3%，app.js 的未使用率是 88.4 %，app.css 未使用率是 85%，说明项目首页访问的资源体积大，是因为包含了一大部分未使用的组件，如果每个页面都只加载自己需要的组件，那网站的访问速度会得到较大的提升。</p>
+<p><img src="https://i.loli.net/2019/10/15/IjcW9CZ5KubxoUn.jpg" alt="itoa_coverage.jpg"></p>
+<p>基于上面遇到的问题，优化打包可以从以下几个方面入手。</p>
+<ol>
+<li>组件动态引入，按需加载，<code>app.653b22c5.js</code> 可以拆分成若干个 js，使用时才去加载对应的 js。</li>
+<li>三方库组件，按需加载，<code>chunk-vendors.82702712.js</code> 可以做拆分，不必一下全部加载，可在使用时再去加载对应部分的 js。</li>
+<li>对资源文件做压缩，上图中可以看到 1069.96kb 的文件， gzip 可以压缩到 310.03kb。</li>
+</ol>
+<h2 id="着手优化项目打包"><a href="#着手优化项目打包" class="headerlink" title="着手优化项目打包"></a>着手优化项目打包</h2><h3 id="路由懒加载"><a href="#路由懒加载" class="headerlink" title="路由懒加载"></a>路由懒加载</h3><p>结合 Vue 的异步组件和 Webpack 的代码分割功能，轻松实现路由组件的懒加载。<br>在 router.js 中，原来导入组件的方式是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'./views/Home.vue'</span></span><br><span class="line"><span class="keyword">import</span> Login <span class="keyword">from</span> <span class="string">'./views/Login.vue'</span></span><br><span class="line"><span class="keyword">import</span> Role <span class="keyword">from</span> <span class="string">'./views/system/Role.vue'</span></span><br><span class="line"><span class="keyword">import</span> User <span class="keyword">from</span> <span class="string">'./views/system/User.vue'</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>这就导致这些组件最后都打包到一个 <code>app.653b22c5.js</code> 文件中，我们修改导入组件的方式，改为动态导入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Home = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./views/Home.vue'</span>)</span><br><span class="line"><span class="keyword">const</span> Login = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./views/Login.vue'</span>)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>修改完所有的组件导入后，在运行 <code>npm run build</code> 打包发现，原来的 <code>app.653b22c5.js</code> 和 css 文件得到了拆分。</p>
+<p><img src="https://i.loli.net/2019/10/15/UqCY6BAjFfWTwsG.jpg" alt="itoa_动态导入_未分组1.jpg"><br>可以看到 app.js 文件从原来的 172.77kb 降到了 18.14 kb。</p>
+<p><img src="https://i.loli.net/2019/10/15/lORWkoGmUM53w1P.jpg" alt="itoa_动态导入_未分组2.jpg"></p>
+<p>但是拆分过细，每个页面都独自拆分出来，一个 js 大一点的 7kb，小的才 2，3kb，css 拆分后有的 0.1kb，甚至还有 0.03kb的，拆分的粒度过细，也会造成更多的网络资源请求，对网站加载造成影响。</p>
+<p>其实我们的一个功能流程通常会涉及多个页面，如果能将多个页面组件分组打包，效果会更好，避免了多次网络资源请求。</p>
+<h3 id="路由懒加载分组"><a href="#路由懒加载分组" class="headerlink" title="路由懒加载分组"></a>路由懒加载分组</h3><p>分组修改方法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Role = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "group-role" */</span><span class="string">'./views/system/Role.vue'</span>)</span><br><span class="line"><span class="keyword">const</span> AddRole = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "group-role" */</span><span class="string">'./views/system/AddRole.vue'</span>)</span><br><span class="line"><span class="keyword">const</span> EditRole = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "group-role" */</span><span class="string">'./views/system/EditRole.vue'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> User = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "group-user" */</span><span class="string">'./views/system/User.vue'</span>)</span><br><span class="line"><span class="keyword">const</span> AddUser = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "group-user" */</span><span class="string">'./views/system/AddUser.vue'</span>)</span><br><span class="line"><span class="keyword">const</span> EditUser = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "group-user" */</span><span class="string">'./views/system/EditUser.vue'</span>)</span><br><span class="line"><span class="keyword">const</span> UserAllotRole = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "group-user" */</span><span class="string">'./views/system/UserAllotRole.vue'</span>)</span><br></pre></td></tr></table></figure>
+<p>按照功能将组件分组后，打包结果如下：</p>
+<p><img src="https://i.loli.net/2019/10/15/gh6wjFm8v4CfbEd.jpg" alt="做路由组件动态引入模块分组.jpg"></p>
+<p>每个功能模块打包后的 js 大概有十几kb，文件数量也大大减少。</p>
+<h3 id="node-modules-打包"><a href="#node-modules-打包" class="headerlink" title="node_modules 打包"></a>node_modules 打包</h3><p><code>chunk-vendors.js</code> 是对 node_modules 中三方库的打包，本项目中 <code>chunk-vendors.js</code> 的大小，Element-UI 占了大部分比例。group-monitor.js 为 327.92 kb 是因为其引入了 echart。</p>
+<p>我在 main.js 中完整引入了 Element-UI，而不是按需引入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ElementUI <span class="keyword">from</span> <span class="string">'element-ui'</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'element-ui/lib/theme-chalk/index.css'</span></span><br><span class="line"><span class="keyword">import</span> http <span class="keyword">from</span> <span class="string">'./utils/network/http'</span></span><br><span class="line"></span><br><span class="line">Vue.use(ElementUI)</span><br></pre></td></tr></table></figure>
+<p>所以会将 Element-UI 的所有组件打包到项目中。</p>
+<p>对三方库的引用务必使用按需加载，不需要的组件就不要引入进来。优化时将 Element-UI 常用的组件在 main.js 中按需引入。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Container, Menu &#125; <span class="keyword">from</span> <span class="string">'element-ui'</span>;</span><br><span class="line"></span><br><span class="line">Vue.use(Container);</span><br><span class="line">Vue.use(Menu);</span><br></pre></td></tr></table></figure>
+<p>页面中有单独用到的 Element-UI 组件，则在该页面中单独引入对应的组件，这样在访问该页面时才去加载这些 ui 组件。</p>
+<p>由于 40 多个页面用到了 Element-UI 组件，改造工作量比较大，我用 echart 在其他页面做测试，看下打包情况。</p>
+<p>我找到三个页面分别按需引入 echart.js：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MonitorDetail.vue 按需引入 echart.js</span></span><br><span class="line"><span class="keyword">var</span> echarts = <span class="built_in">require</span>(<span class="string">'echarts/lib/echarts'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'echarts/lib/chart/pie'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'echarts/lib/component/tooltip'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'echarts/lib/component/title'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'echarts/lib/component/legendScroll'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Bulletin.vue 按需引入 echart.js</span></span><br><span class="line"><span class="keyword">var</span> echarts = <span class="built_in">require</span>(<span class="string">'echarts/lib/echarts'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'echarts/lib/chart/bar'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">"echarts/lib/chart/tree"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// About.vue 按需引入 echart.js</span></span><br><span class="line"><span class="keyword">var</span> echarts = <span class="built_in">require</span>(<span class="string">'echarts/lib/echarts'</span>);</span><br><span class="line"><span class="comment">// 与 Bulletin.vue 公共的引入</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'echarts/lib/chart/bar'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">"echarts/lib/chart/tree"</span>);</span><br><span class="line"><span class="comment">// 与 MonitorDetail.vue 公共的引入</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'echarts/lib/chart/pie'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'echarts/lib/component/tooltip'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'echarts/lib/component/title'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'echarts/lib/component/legendScroll'</span>);</span><br><span class="line"><span class="comment">// 自己独有的引入</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">"echarts/lib/chart/treemap"</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">"echarts/lib/chart/graph"</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">"echarts/lib/chart/gauge"</span>);</span><br></pre></td></tr></table></figure>
+<p>About.vue 引入的 echart 组件中有一部分与 MonitorDetail.vue 相同，一部分与 Bulletin.vue 相同，还有三个页面公共的部分，我们期望公共的部分打包成一个 js，不会重复打包，About.vue 独有部分还和 Acount.vue 在一起打包。</p>
+<p>打包结果如下：</p>
+<p><img src="https://i.loli.net/2019/10/15/zftE23aSDOwbdMx.jpg" alt="测试 SplitChunksPlugin2.jpg"></p>
+<p><code>about~group-bulletin~group-monitor.js</code> 是三个页面 echart 的公共部分，<code>about~group-monitor.js</code> 是 About.vue 与 MonitorDetail.vue echart 的公共部分，<code>about~group-bulletin.js</code> 是 About.vue 与 Bulletin.vue 的公共部分，about.js 独有的 echart 组件则还在自己的 js 中。</p>
+<p>只要我们按需引入三方库组件，vue-cli3 就能智能的帮助我们合理的打包，这主要是依靠插件 SplitChunksPlugin 来完成的。</p>
+<h3 id="gzip-压缩"><a href="#gzip-压缩" class="headerlink" title="gzip 压缩"></a>gzip 压缩</h3><p>如果 Nginx 服务器开启 gzip，会将静态资源在服务端进行压缩，压缩包传输给浏览器后，浏览器再进行解压使用，这大大提高了网络传输的效率，尤其对 js，css 这类文本的压缩，效果很明显。</p>
+<p>以下是 Nginx 开启 gzip 的配置：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启|关闭 gzip。</span></span><br><span class="line"><span class="attribute">gzip</span> <span class="literal">on</span>|<span class="literal">off</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 文件大于指定 size 才压缩，以 kb 为单位。</span></span><br><span class="line"><span class="attribute">gzip_min_length</span> <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 压缩级别，1-9，值越大压缩比越大，但更加占用 CPU，且压缩效率越来越低。</span></span><br><span class="line"><span class="attribute">gzip_comp_level</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 压缩的文件类型。</span></span><br><span class="line"><span class="attribute">gzip_types</span> text/plain application/javascript application/x-javascript text/css application/xml text/javascript;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启后如果能找到 .gz 文件，直接返回该文件，不会启用服务端压缩。</span></span><br><span class="line"><span class="attribute">gzip_static</span> <span class="literal">on</span>|<span class="literal">off</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 是否添加响应头 Vary: Accept-Encoding 建议开启。</span></span><br><span class="line">gzip_vary <span class="literal">on</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 请求压缩的缓冲区数量和大小，以 4k 为单位，32 为倍数。</span></span><br><span class="line"><span class="attribute">gzip_buffers</span> <span class="number">32</span> <span class="number">4K</span>;</span><br></pre></td></tr></table></figure>
+<p>如果 Nginx 没有开启 gzip，前端在打包的时候可以打包出一份资源的压缩版本，Nginx 也会把压缩文件传输给浏览器。</p>
+<p>首先安装一个插件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D compression-webpack-plugin</span><br></pre></td></tr></table></figure>
+<p>在 vue.config.js 中配置下这个插件:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CompressionPlugin = <span class="built_in">require</span>(<span class="string">"compression-webpack-plugin"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  configureWebpack: <span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (process.env.NODE_ENV === <span class="string">'production'</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        plugins: [</span><br><span class="line">          <span class="keyword">new</span> CompressionPlugin(&#123;</span><br><span class="line">            test: <span class="regexp">/\.js$|\.html$|\.css/</span>,</span><br><span class="line">            threshold: <span class="number">10240</span>,</span><br><span class="line">            deleteOriginalAssets: <span class="literal">false</span></span><br><span class="line">          &#125;)</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>nginx 服务器还要做一下简单配置:</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gzip_static</span> <span class="literal">on</span>;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>compression-webpack-plugin</code> 插件后的打包结果如下：</p>
+<p><img src="https://i.loli.net/2019/10/15/9ydBwaDFkZLm5I4.jpg" alt="使用 gzip 压缩.jpg"></p>
+<p>上图中的 .gz 就是对应一个资源文件的压缩版本。</p>
+<p>配置成功后，重新将代码部署到 nginx，重新载入 nginx 配置。</p>
+<p>我们先看一下没有开启 <code>gzip_static off;</code> gzip 的访问情况：</p>
+<p><img src="https://i.loli.net/2019/10/15/vZdoN3JI1HwiGDQ.jpg" alt="未gzip压缩.jpg"></p>
+<p>我们直接看最大的两个文件 chunk-vendors.js 和 chunk-vendors.css，他们的大小分别是 748kb 和 194kb，加载用时分别是 622ms 和 247ms。</p>
+<p>然后我们开启 gzip <code>gzip_static on;</code> 再看下资源的加载情况：</p>
+<p><img src="https://i.loli.net/2019/10/15/dKbhnyepXBwzFr4.jpg" alt="gzip压缩.jpg"></p>
+<p>同样是 chunk-vendors.js 和 chunk-vendors.css，他们的大小变成 190kb 和 29.3kb，加载时间变成 245ms 和 46ms。</p>
+<p>以上就是使用 gzip 的效果。</p>
+<h3 id="Vuex-动态注册模块"><a href="#Vuex-动态注册模块" class="headerlink" title="Vuex 动态注册模块"></a>Vuex 动态注册模块</h3><p>vuex 通常使用静态模块，这些模块都会打包到 app.js 中，但是如果有的模块过大而且不是立刻就会用到，我们可以动态的注册模块到 vuex 中。</p>
+<p>在使用 vuex 某个模块的时候才注册：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mounted () &#123; </span><br><span class="line">    <span class="keyword">this</span>.$store.registerModule(<span class="string">'myModule'</span>, MyModule)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在不使用的时候，注销模块：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">beforeDestroy () &#123;</span><br><span class="line">    <span class="keyword">this</span>.$store.unregisterModule(<span class="string">'myModule'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样实现的效果是该页面在加载时才下载模块内容，而不是刚访问网站就去下载。</p>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>打包时，我们可以通过一些辅助工具帮助分析打包情况，有重点的去做优化。</p>
+<p>打开 Chrome 的调试模式，CMD+SHIFT+P 调出命令面板，输入 Coverage，选择 Show Coverage，然后访问指定网站，点击按钮 Instrument converge 就能查看已加载资源的未使用率。</p>
+<p><img src="https://i.loli.net/2019/10/15/IjcW9CZ5KubxoUn.jpg" alt="itoa_coverage.jpg"></p>
+<p>使用 <code>webpack-bundle-analyzer</code> 插件可以分析出打包后的文件结构。</p>
+<p>安装该插件 <code>npm i –D webpack-bundle-analyzer</code>，vue.config.js 中做如下配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">chainWebpack: <span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (process.env.NODE_ENV === <span class="string">'production'</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (process.env.npm_config_report) &#123;</span><br><span class="line">      config</span><br><span class="line">        .plugin(<span class="string">'webpack-bundle-analyzer'</span>)</span><br><span class="line">        .use(<span class="built_in">require</span>(<span class="string">'webpack-bundle-analyzer'</span>).BundleAnalyzerPlugin)</span><br><span class="line">        .end()</span><br><span class="line">      config.plugins.delete(<span class="string">'prefetch'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后使用 <code>npm run build --report</code> 命令打包就可以查看到打包后的文件结构。</p>
+<p><img src="https://i.loli.net/2019/10/15/gQM1wE5uzJGj2IF.jpg" alt="Jietu20191015-162848@2x.jpg"></p>
+<p>这个打包后的文件结构页面很有参考价值，对打包的优化帮助很大。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="https://segmentfault.com/a/1190000019499007#articleHeader4" target="_blank" rel="noopener">提升90%加载速度——vuecli下的首屏性能优化</a><br><a href="https://www.infoq.cn/article/9ihyy7HW00ij8suTh*zN" target="_blank" rel="noopener">Vue 性能优化：如何实现延迟加载和代码拆分？</a><br><a href="https://www.deepwinter.com/111.html" target="_blank" rel="noopener">vue-cli3+nginx配置gzip压缩</a></p>
+
+  </div>
+</article>
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+    <div id="gitalk-container"></div>
+    <script type="text/javascript">
+        var gitalk = new Gitalk({
+            clientID: '46f9862d762f2b91e265',
+            clientSecret: 'b1a5c3d47828b1c1ab0b25081463e2b94f132245',
+            id: md5(window.location.pathname),
+            repo: 'al-liu.github.io',
+            owner: 'al-liu',
+            admin: 'al-liu',
+            distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#着手优化项目打包"><span class="toc-number">1.</span> <span class="toc-text">着手优化项目打包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#路由懒加载"><span class="toc-number">1.1.</span> <span class="toc-text">路由懒加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#路由懒加载分组"><span class="toc-number">1.2.</span> <span class="toc-text">路由懒加载分组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#node-modules-打包"><span class="toc-number">1.3.</span> <span class="toc-text">node_modules 打包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gzip-压缩"><span class="toc-number">1.4.</span> <span class="toc-text">gzip 压缩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vuex-动态注册模块"><span class="toc-number">1.5.</span> <span class="toc-text">Vuex 动态注册模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具"><span class="toc-number">1.6.</span> <span class="toc-text">工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文章"><span class="toc-number">2.</span> <span class="toc-text">参考文章</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&text=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&title=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&is_video=false&description=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=vue-cli3 webpack 打包优化实践总结&body=Check out this article: https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&title=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&title=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&title=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&title=vue-cli3 webpack 打包优化实践总结"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2019/10/14/vue-cli3-webpack-打包优化实践总结/&name=vue-cli3 webpack 打包优化实践总结&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 刘海川 al-liu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
