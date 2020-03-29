@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="推荐金子姑娘关于写作的分享视频 新技术，新框架往往有很多难懂的概念，这些概念其实是对它实现功能的抽象（往往是精华部分）。直接面对这些抽象概念很容易不知所措。这个时候最好从一些简单易懂的使用案例入手，来理解其中的概念。使用框架时，也会很容易出现知道如何使用但不清楚为什么这么实现，这是对框架上层的抽象理解不透的原因。看起来像个鸡生蛋，蛋生鸡的问题，其实我想说的就是上层的抽象和底层的实现是不能分开理解的">
+<meta name="keywords" content="Java, iOS, Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于如何学习新技术，新框架的一点心得体会">
+<meta property="og:url" content="https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/index.html">
+<meta property="og:site_name" content="刘海川的技术博客">
+<meta property="og:description" content="推荐金子姑娘关于写作的分享视频 新技术，新框架往往有很多难懂的概念，这些概念其实是对它实现功能的抽象（往往是精华部分）。直接面对这些抽象概念很容易不知所措。这个时候最好从一些简单易懂的使用案例入手，来理解其中的概念。使用框架时，也会很容易出现知道如何使用但不清楚为什么这么实现，这是对框架上层的抽象理解不透的原因。看起来像个鸡生蛋，蛋生鸡的问题，其实我想说的就是上层的抽象和底层的实现是不能分开理解的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-29T09:54:07.241Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于如何学习新技术，新框架的一点心得体会">
+<meta name="twitter:description" content="推荐金子姑娘关于写作的分享视频 新技术，新框架往往有很多难懂的概念，这些概念其实是对它实现功能的抽象（往往是精华部分）。直接面对这些抽象概念很容易不知所措。这个时候最好从一些简单易懂的使用案例入手，来理解其中的概念。使用框架时，也会很容易出现知道如何使用但不清楚为什么这么实现，这是对框架上层的抽象理解不透的原因。看起来像个鸡生蛋，蛋生鸡的问题，其实我想说的就是上层的抽象和底层的实现是不能分开理解的">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>关于如何学习新技术，新框架的一点心得体会</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/10/14/vue-cli3-webpack-打包优化实践总结/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&text=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&title=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&is_video=false&description=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=关于如何学习新技术，新框架的一点心得体会&body=Check out this article: https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&title=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&title=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&title=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&title=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&name=关于如何学习新技术，新框架的一点心得体会&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        关于如何学习新技术，新框架的一点心得体会
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">刘海川的技术博客</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-03-29T09:51:28.000Z" itemprop="datePublished">2020-03-29</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><a href="http://t.cn/A6Z5MWsH?m=4487511608715223&amp;u=5793089561" target="_blank" rel="noopener">推荐金子姑娘关于写作的分享视频</a></p>
+<p>新技术，新框架往往有很多难懂的概念，这些概念其实是对它实现功能的抽象（往往是精华部分）。直接面对这些抽象概念很容易不知所措。这个时候最好从一些简单易懂的使用案例入手，来理解其中的概念。使用框架时，也会很容易出现知道如何使用但不清楚为什么这么实现，这是对框架上层的抽象理解不透的原因。看起来像个鸡生蛋，蛋生鸡的问题，其实我想说的就是上层的抽象和底层的实现是不能分开理解的，从简单案例入手，深入理解框架的抽象概念，待完全掌握框架的抽象概念后，再回头去看它的其他实现会变得非常容易，我觉得这是学好一门新技术，新框架的思路。</p>
+<p>问问题，也是拆解抽象概念的好方法，比如 Spring 的 IOC 概念，我们可以问它是做什么用的，不用它我们通常怎么做，使用它有什么好处。当我们解答以上一些问题后，IOC 的概念在我们脑海中的印象逐渐变的清晰。</p>
+
+  </div>
+</article>
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+    <div id="gitalk-container"></div>
+    <script type="text/javascript">
+        var gitalk = new Gitalk({
+            clientID: '46f9862d762f2b91e265',
+            clientSecret: 'b1a5c3d47828b1c1ab0b25081463e2b94f132245',
+            id: md5(window.location.pathname),
+            repo: 'al-liu.github.io',
+            owner: 'al-liu',
+            admin: 'al-liu',
+            distractionFreeMode: ''
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&text=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&title=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&is_video=false&description=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=关于如何学习新技术，新框架的一点心得体会&body=Check out this article: https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&title=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&title=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&title=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&title=关于如何学习新技术，新框架的一点心得体会"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/al-liu/2020/03/29/关于如何学习新技术，新框架的一点心得体会/&name=关于如何学习新技术，新框架的一点心得体会&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 刘海川 al-liu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="https://github.com/al-liu">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/al-liu?tab=repositories">项目</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
